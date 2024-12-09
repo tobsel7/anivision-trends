@@ -1,5 +1,11 @@
+# IntelliJ
 .idea
+
+# Node
 .DS_Store
 /dist/
 node_modules/
 yarn-error.log
+
+# Observable
+src/.observablehq/cache/
