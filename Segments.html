@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="generator" content="Observable Framework v1.13.0">
+<title>Segments Test | AniVision Trends</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
+<link rel="preload" as="style" href="./_observablehq/theme-air,near-midnight,alt,wide.db1cdf55.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
+<link rel="stylesheet" type="text/css" href="./_observablehq/theme-air,near-midnight,alt,wide.db1cdf55.css">
+<link rel="modulepreload" href="./_observablehq/client.302c10c3.js">
+<link rel="modulepreload" href="./_observablehq/runtime.9393ab6d.js">
+<link rel="modulepreload" href="./_observablehq/stdlib.95bfbf7e.js">
+<link rel="modulepreload" href="./_import/components/data_transformations.c51d139b.js">
+<link rel="modulepreload" href="./_npm/d3@7.9.0/38e58290.js">
+<link rel="modulepreload" href="./_npm/d3-dsv@3.0.1/407f7a1f.js">
+<link rel="modulepreload" href="./_npm/d3-array@3.2.4/e95f898e.js">
+<link rel="modulepreload" href="./_npm/d3-axis@3.0.0/d44feff9.js">
+<link rel="modulepreload" href="./_npm/d3-brush@3.0.0/5830b12a.js">
+<link rel="modulepreload" href="./_npm/d3-chord@3.0.1/84d7b8e9.js">
+<link rel="modulepreload" href="./_npm/d3-color@3.1.0/2c0cdfa2.js">
+<link rel="modulepreload" href="./_npm/d3-contour@4.0.2/626bedc4.js">
+<link rel="modulepreload" href="./_npm/d3-delaunay@6.0.4/00c41b5d.js">
+<link rel="modulepreload" href="./_npm/d3-dispatch@3.0.1/b5f7cdc6.js">
+<link rel="modulepreload" href="./_npm/d3-drag@3.0.0/b22c5864.js">
+<link rel="modulepreload" href="./_npm/d3-ease@3.0.1/6f15f633.js">
+<link rel="modulepreload" href="./_npm/d3-fetch@3.0.1/ef1ec490.js">
+<link rel="modulepreload" href="./_npm/d3-force@3.0.0/5e1ff060.js">
+<link rel="modulepreload" href="./_npm/d3-format@3.1.0/5851d7ef.js">
+<link rel="modulepreload" href="./_npm/d3-geo@3.1.1/dcd02767.js">
+<link rel="modulepreload" href="./_npm/d3-hierarchy@3.1.2/f1db2593.js">
+<link rel="modulepreload" href="./_npm/d3-interpolate@3.0.1/034b7bcb.js">
+<link rel="modulepreload" href="./_npm/d3-path@3.1.0/4bb53638.js">
+<link rel="modulepreload" href="./_npm/d3-polygon@3.0.1/bbafde58.js">
+<link rel="modulepreload" href="./_npm/d3-quadtree@3.0.1/aa5b35a8.js">
+<link rel="modulepreload" href="./_npm/d3-random@3.0.1/32c7fec2.js">
+<link rel="modulepreload" href="./_npm/d3-scale@4.0.2/567840a0.js">
+<link rel="modulepreload" href="./_npm/d3-scale-chromatic@3.1.0/cf9b720b.js">
+<link rel="modulepreload" href="./_npm/d3-selection@3.0.0/5dcd62f4.js">
+<link rel="modulepreload" href="./_npm/d3-shape@3.2.0/be692bd9.js">
+<link rel="modulepreload" href="./_npm/d3-time@3.1.0/5bc129e1.js">
+<link rel="modulepreload" href="./_npm/d3-time-format@4.1.0/19c92b44.js">
+<link rel="modulepreload" href="./_npm/d3-timer@3.0.1/f31b5398.js">
+<link rel="modulepreload" href="./_npm/d3-transition@3.0.1/8debb4ba.js">
+<link rel="modulepreload" href="./_npm/d3-zoom@3.0.0/4b0cc581.js">
+<link rel="modulepreload" href="./_npm/internmap@2.0.3/5eed35fd.js">
+<link rel="modulepreload" href="./_npm/delaunator@5.0.1/e67acb27.js">
+<link rel="modulepreload" href="./_npm/robust-predicates@3.0.2/8ac9039b.js">
+<script type="module">
+
+import {define} from "./_observablehq/client.302c10c3.js";
+import {registerFile} from "./_observablehq/stdlib.95bfbf7e.js";
+
+registerFile("./data/segments.csv", {"name":"./data/segments.csv","mimeType":"text/csv","path":"./_file/data/segments.9ae01672.csv","lastModified":1734812211567,"size":1036654});
+registerFile("./data/videos.csv", {"name":"./data/videos.csv","mimeType":"text/csv","path":"./_file/data/videos.eaff3335.csv","lastModified":1734812211567,"size":132080});
+
+define({id: "923b37d1", inputs: ["FileAttachment"], outputs: ["videos","segments"], body: (FileAttachment) => {
+// Load the CSV data
+const videos = FileAttachment("./data/videos.csv").csv({typed: true});
+const segments = FileAttachment("./data/segments.csv").csv({typed: true});
+return {videos,segments};
+}});
+
+define({id: "8f4837ec", inputs: ["videos","segments","d3"], outputs: ["VideosAndSegments","GetSegmentTypeText","videosAndSegments","videoSegments","counts","graphData","margin","width","height","svg","xScale","yScale","line","existingElement"], body: async (videos,segments,d3) => {
+const {VideosAndSegments, GetSegmentTypeText} = await import("./_import/components/data_transformations.c51d139b.js");
+
+var videosAndSegments = new VideosAndSegments(videos, segments, d3);
+var videoSegments=videosAndSegments.GetVideoSegments();
+
+// Group data by segment_type_number and count occurrences
+const counts = {};
+videoSegments.forEach(segment => {
+  const number = segment.segment_type_number;
+  if (!counts[number]) counts[number] = 0;
+  counts[number]++;
+});
+
+// Convert grouped data into an array of objects
+const graphData = Object.entries(counts).map(([number, count]) => ({
+  label: `${number}: ${GetSegmentTypeText(number)}`,
+  count
+}));
+
+// Set up D3.js line graph
+const margin = { top: 20, right: 30, bottom: 1000, left: 100 },
+  width = 800 - margin.left - margin.right,
+  height = 500;// - margin.top - margin.bottom;
+
+  const svg = d3.create("svg")
+        .attr("width", width)
+        .attr("height",  height + margin.top + margin.bottom)
+        .attr("transform", `translate(${margin.left},${margin.top})`)
+        .attr("viewBox", [0, 0, width, height]);
+
+// Scales
+const xScale = d3.scalePoint()
+  .domain(graphData.map(d => d.label))
+  .range([0, width]);
+
+const yScale = d3.scaleLinear()
+  .domain([0, d3.max(graphData, d => d.count)])
+  .range([height, 0]);
+
+// Line generator
+const line = d3.line()
+  .x(d => xScale(d.label))
+  .y(d => yScale(d.count));
+
+// Draw the line
+svg.append("path")
+  .datum(graphData)
+  .attr("fill", "none")
+  .attr("stroke", "steelblue")
+  .attr("stroke-width", 2)
+  .attr("d", line);
+
+// X-axis
+svg.append("g")
+  .attr("transform", `translate(0,${height})`)
+  .call(d3.axisBottom(xScale))
+  .selectAll("text")
+  .attr("transform", "rotate(-90)")
+  .style("text-anchor", "end");
+
+// Y-axis
+svg.append("g")
+  .call(d3.axisLeft(yScale));
+
+// Add labels
+svg.selectAll(".dot")
+  .data(graphData)
+  .enter().append("circle")
+  .attr("class", "dot")
+  .attr("cx", d => xScale(d.label))
+  .attr("cy", d => yScale(d.count))
+  .attr("r", 4)
+
+const existingElement = document.getElementById("segments-test");
+ existingElement.parentNode.insertBefore(svg.node(), existingElement.nextSibling);
+
+return {VideosAndSegments,GetSegmentTypeText,videosAndSegments,videoSegments,counts,graphData,margin,width,height,svg,xScale,yScale,line,existingElement};
+}});
+
+</script>
+</head>
+<body>
+<input id="observablehq-sidebar-toggle" type="checkbox" title="Toggle sidebar">
+<label id="observablehq-sidebar-backdrop" for="observablehq-sidebar-toggle"></label>
+<nav id="observablehq-sidebar">
+  <ol>
+    <label id="observablehq-sidebar-close" for="observablehq-sidebar-toggle"></label>
+    <li class="observablehq-link"><a href="./">AniVision Trends</a></li>
+  </ol>
+  <ol>
+    <li class="observablehq-link"><a href="./Line_Chart_e">Line Chart</a></li>
+    <li class="observablehq-link observablehq-link-active"><a href="./Segments">Segments Test</a></li>
+    <li class="observablehq-link"><a href="./animation-trends">Animation Trends</a></li>
+    <li class="observablehq-link"><a href="./bubbe_chart">Timeline with Bubble Chart Demo</a></li>
+    <li class="observablehq-link"><a href="./collapsable_tree">Collapsable Tree Menu Demo</a></li>
+    <li class="observablehq-link"><a href="./facet">Facet Chart</a></li>
+    <li class="observablehq-link"><a href="./videos-overview">AniVision Data Overview</a></li>
+  </ol>
+</nav>
+<script>{const e=document.querySelector("#observablehq-sidebar"),t=document.querySelector("#observablehq-sidebar-toggle"),r=sessionStorage.getItem("observablehq-sidebar");r?t.checked=r==="true":t.indeterminate=!0;for(const o of document.querySelectorAll("#observablehq-sidebar summary")){const s=o.parentElement;switch(sessionStorage.getItem(`observablehq-sidebar:${o.textContent}`)){case"true":s.open=!0;break;case"false":s.classList.contains("observablehq-section-active")||(s.open=!1);break}}addEventListener("beforeunload",()=>sessionStorage.setItem("observablehq-sidebar-scrolly",`${e.scrollTop}`));const a=sessionStorage.getItem("observablehq-sidebar-scrolly");a!=null&&(e.style.cssText="overflow: hidden;",e.scrollTop=+a,e.style.cssText="");}</script>
+<div id="observablehq-center">
+<main id="observablehq-main" class="observablehq">
+<h1 id="segments-test" tabindex="-1"><a class="observablehq-header-anchor" href="#segments-test">Segments Test</a></h1>
+<div class="observablehq observablehq--block"><!--:923b37d1:--></div>
+<div class="observablehq observablehq--block"><!--:8f4837ec:--></div>
+</main>
+<footer id="observablehq-footer">
+<nav><a rel="prev" href="./Line_Chart_e"><span>Line Chart</span></a><a rel="next" href="./animation-trends"><span>Animation Trends</span></a></nav>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-12-21T20:17:00">Dec 21, 2024</a>.</div>
+</footer>
+</div>
+</body>
+</html>
