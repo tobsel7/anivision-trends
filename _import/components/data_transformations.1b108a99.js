@@ -68,7 +68,7 @@ export class VideosAndSegments {
         archive: obj.archive,
         organizations: splitToArray(obj.organizations),
         organizations_location: obj.organizations_location,
-        genres: obj.genres,
+        genres: splitToArray(obj.genres).map(g => g.replace(/"/g, "")), // Remove quotes from genres
         agents: splitToArray(obj.agents),
         year: getYear(obj) // Add year based on date_of_production or date_of_release
     }))
@@ -95,7 +95,7 @@ export function getYear(obj) {
 }
 
 // Define the segment type hierarchy as an object
-const hierarchy = {
+export const hierarchy = {
     "Image Type": {
         "1.1": "Animation",
         "1.2": "Hybrid Image",
