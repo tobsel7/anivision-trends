@@ -42,21 +42,28 @@ const selectedGenres = view(Inputs.select(
 ```js
 function createSlidingWindowPlot(videos, getSelectedGenres, containerId, brushContainerId, width = 800, height = 300) {
   // Compute grouped video counts
-  const computeVideoCounts = (videos) => {
-    const groupedVideos = d3.group(videos, v => v.year);
-    return Array.from(groupedVideos, ([year, videos]) => ({ year, count: videos.length }))
-      .sort((a, b) => a.year - b.year);
+  const computeVideoCounts = (data) => {
+    const groupedVideos = d3.group(data, (v) => v.year);
+    return Array.from(groupedVideos, ([year, items]) => ({ year, count: items.length })).sort(
+      (a, b) => a.year - b.year
+    );
   };
+
+  // Initial data for the brush chart (always unfiltered)
+  const allVideoCounts = computeVideoCounts(videos);
 
   // Filter videos based on selected genres
-  const filterVideosByGenres = () => {
-    const selectedGenres = getSelectedGenres; // Get selected genres dynamically
-    return videos.filter(v => v.genres.some(g => selectedGenres.includes(g)));
+  const filterVideosByGenres = (genres) => {
+    return videos.filter((v) => v.genres.some((g) => genres.includes(g)));
   };
 
-  let filteredVideos = filterVideosByGenres(); // Initialize with filtered videos
-  let videoCounts = computeVideoCounts(filteredVideos);
-  let filteredData = [...videoCounts]; // Initialize filtered data with full dataset
+  // Store the previous selection of genres
+  let previousGenres = [...getSelectedGenres];
+
+  // Initial filtering for main chart
+  let filteredVideos = filterVideosByGenres(previousGenres); // Filter videos based on genres
+  let videoCounts = computeVideoCounts(filteredVideos); // Filtered counts for the main chart
+  let filteredData = [...videoCounts]; // Data to render on the main chart
 
   // Render the main line and dot plot
   const renderPlot = (data) => {
@@ -81,7 +88,7 @@ function createSlidingWindowPlot(videos, getSelectedGenres, containerId, brushCo
     chartContainer.appendChild(plot);
   };
 
-  renderPlot(videoCounts); // Initial render with all data
+  renderPlot(videoCounts); // Initial render with filtered data
 
   const brushSvg = d3.select(`#${brushContainerId}`);
   const margin = { top: 10, right: 20, bottom: 20, left: 20 };
@@ -90,57 +97,79 @@ function createSlidingWindowPlot(videos, getSelectedGenres, containerId, brushCo
 
   const xBrushScale = d3
     .scaleLinear()
-    .domain(d3.extent(videoCounts, d => d.year))
+    .domain(d3.extent(allVideoCounts, (d) => d.year)) // Always unfiltered data
     .range([0, brushWidth]);
 
   const yBrushScale = d3
     .scaleLinear()
-    .domain([0, d3.max(videoCounts, d => d.count)])
+    .domain([0, d3.max(allVideoCounts, (d) => d.count)]) // Always unfiltered data
     .range([brushHeight, 0]);
 
   const brush = d3.brushX()
-    .extent([[0, 0], [brushWidth, brushHeight]])
+    .extent([
+      [0, 0],
+      [brushWidth, brushHeight],
+    ])
     .on("brush end", ({ selection }) => {
       if (selection) {
         const [x0, x1] = selection.map(xBrushScale.invert);
-        filteredData = videoCounts.filter(d => d.year >= x0 && d.year <= x1); // Filter by sliding window
-        renderPlot(filteredData); // Update main plot
+        filteredData = videoCounts.filter((d) => d.year >= x0 && d.year <= x1); // Filter main chart data
+        renderPlot(filteredData); // Update the main plot
         renderAdditionalBarPlot(filteredData); // Update bar plot
       }
     });
 
   const g = brushSvg
     .append("g")
+    .attr("class", "brush") // Add a class to identify the brush element
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
-  g.append("g")
-    .selectAll("rect")
-    .data(videoCounts)
-    .join("rect")
-    .attr("x", d => xBrushScale(d.year))
-    .attr("y", d => yBrushScale(d.count))
-    .attr("width", brushWidth / videoCounts.length)
-    .attr("height", d => brushHeight - yBrushScale(d.count))
-    .attr("fill", "#56B4E9");
+  const renderBrush = () => {
+    g.selectAll("*").remove(); // Clear previous brush content
 
-  g.append("g")
-    .attr("transform", `translate(0,${brushHeight})`)
-    .call(d3.axisBottom(xBrushScale).ticks(10).tickFormat(d3.format("d")))
-    .selectAll("text")
-    .style("fill", "#fff");
+    g.selectAll("rect")
+      .data(allVideoCounts) // Always unfiltered data
+      .join("rect")
+      .attr("x", (d) => xBrushScale(d.year))
+      .attr("y", (d) => yBrushScale(d.count))
+      .attr("width", brushWidth / allVideoCounts.length)
+      .attr("height", (d) => brushHeight - yBrushScale(d.count))
+      .attr("fill", "#56B4E9");
 
-  g.append("g").call(d3.axisLeft(yBrushScale).ticks(5)).selectAll("text").style("fill", "#fff");
-  g.append("g").call(brush);
+    g.append("g")
+      .attr("transform", `translate(0,${brushHeight})`)
+      .call(d3.axisBottom(xBrushScale).ticks(10).tickFormat(d3.format("d")))
+      .selectAll("text")
+      .style("fill", "#fff");
 
+    g.append("g").call(d3.axisLeft(yBrushScale).ticks(5)).selectAll("text").style("fill", "#fff");
 
-      filteredVideos = filterVideosByGenres(); // Refilter videos by genres
-      videoCounts = computeVideoCounts(filteredVideos); // Recalculate video counts
+    g.append("g").call(brush); // Append brush behavior
+  };
+
+  renderBrush(); // Render the brush initially
+
+  // Update plots when selected genres change
+  const updatePlots = () => {
+    const currentGenres = [...getSelectedGenres]; // Get the current genres
+    if (JSON.stringify(currentGenres) !== JSON.stringify(previousGenres)) {
+      // Check if the selection has changed
+      previousGenres = [...currentGenres]; // Update the stored genres
+      g.call(brush.move, null); // Reset the brush selection
+      filteredVideos = filterVideosByGenres(currentGenres); // Refilter videos by genres
+      videoCounts = computeVideoCounts(filteredVideos); // Recompute video counts
       filteredData = [...videoCounts]; // Reset filtered data
       renderPlot(filteredData); // Update the main plot
       renderAdditionalBarPlot(filteredData); // Update the additional bar plot
+      renderBrush(); // Refresh the brush with unfiltered data
+    }
+  };
 
-  return filteredData;
+  return updatePlots; // Return a function to trigger updates dynamically
 }
+
+
+
 
 // Function for the additional bar plot
 function renderAdditionalBarPlot(filteredData) {
