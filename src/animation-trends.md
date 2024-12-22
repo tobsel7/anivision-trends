@@ -40,27 +40,169 @@ const selectedGenres = view(Inputs.select(
 ```
 
 ```js
-const filteredVideos = videos.filter(v => v.genres.some(g => 
-    selectedGenres.includes(g) &&
-    1 == 1 // add filter conditions here
-))
-const groupedVideos = d3.group(filteredVideos, v => v.year)
+function createSlidingWindowPlot(videos, getSelectedGenres, containerId, brushContainerId, width = 800, height = 300) {
+  // Compute grouped video counts
+  const computeVideoCounts = (videos) => {
+    const groupedVideos = d3.group(videos, v => v.year);
+    return Array.from(groupedVideos, ([year, videos]) => ({ year, count: videos.length }))
+      .sort((a, b) => a.year - b.year);
+  };
 
-const videoCounts = Array.from(groupedVideos, ([year, videos]) => ({year, count: videos.length}))
-    .sort((a, b) => a.year - b.year)
+  // Filter videos based on selected genres
+  const filterVideosByGenres = () => {
+    const selectedGenres = getSelectedGenres; // Get selected genres dynamically
+    return videos.filter(v => v.genres.some(g => selectedGenres.includes(g)));
+  };
 
-const plot = view(Plot.plot({
-        title: "Videos over the years",
-        width,
-        height: 300,
-        x: {label: "Year", tickFormat: d3.format("d")},
-        y: {label: "Count"},
-        marks: [
-            Plot.line(videoCounts, {x: "year", y: "count", stroke: "steelblue"}),
-            Plot.dot(videoCounts, {x: "year", y: "count", fill: "steelblue"})
-        ]
-    }))
+  let filteredVideos = filterVideosByGenres(); // Initialize with filtered videos
+  let videoCounts = computeVideoCounts(filteredVideos);
+  let filteredData = [...videoCounts]; // Initialize filtered data with full dataset
+
+  // Render the main line and dot plot
+  const renderPlot = (data) => {
+    const plot = Plot.plot({
+      width,
+      height,
+      x: { label: "Year", tickFormat: d3.format("d"), grid: true },
+      y: { label: "Count", grid: true },
+      marks: [
+        Plot.line(data, { x: "year", y: "count", stroke: "#56B4E9", strokeWidth: 2 }),
+        Plot.dot(data, { x: "year", y: "count", fill: "#D55E00" }),
+      ],
+      style: {
+        background: "#121212", // Black background
+        color: "#fff", // White text
+        fontFamily: "Arial, sans-serif",
+      },
+    });
+
+    const chartContainer = document.getElementById(containerId);
+    chartContainer.innerHTML = ""; // Clear previous chart
+    chartContainer.appendChild(plot);
+  };
+
+  renderPlot(videoCounts); // Initial render with all data
+
+  const brushSvg = d3.select(`#${brushContainerId}`);
+  const margin = { top: 10, right: 20, bottom: 20, left: 20 };
+  const brushWidth = +brushSvg.attr("width") - margin.left - margin.right;
+  const brushHeight = +brushSvg.attr("height") - margin.top - margin.bottom;
+
+  const xBrushScale = d3
+    .scaleLinear()
+    .domain(d3.extent(videoCounts, d => d.year))
+    .range([0, brushWidth]);
+
+  const yBrushScale = d3
+    .scaleLinear()
+    .domain([0, d3.max(videoCounts, d => d.count)])
+    .range([brushHeight, 0]);
+
+  const brush = d3.brushX()
+    .extent([[0, 0], [brushWidth, brushHeight]])
+    .on("brush end", ({ selection }) => {
+      if (selection) {
+        const [x0, x1] = selection.map(xBrushScale.invert);
+        filteredData = videoCounts.filter(d => d.year >= x0 && d.year <= x1); // Filter by sliding window
+        renderPlot(filteredData); // Update main plot
+        renderAdditionalBarPlot(filteredData); // Update bar plot
+      }
+    });
+
+  const g = brushSvg
+    .append("g")
+    .attr("transform", `translate(${margin.left},${margin.top})`);
+
+  g.append("g")
+    .selectAll("rect")
+    .data(videoCounts)
+    .join("rect")
+    .attr("x", d => xBrushScale(d.year))
+    .attr("y", d => yBrushScale(d.count))
+    .attr("width", brushWidth / videoCounts.length)
+    .attr("height", d => brushHeight - yBrushScale(d.count))
+    .attr("fill", "#56B4E9");
+
+  g.append("g")
+    .attr("transform", `translate(0,${brushHeight})`)
+    .call(d3.axisBottom(xBrushScale).ticks(10).tickFormat(d3.format("d")))
+    .selectAll("text")
+    .style("fill", "#fff");
+
+  g.append("g").call(d3.axisLeft(yBrushScale).ticks(5)).selectAll("text").style("fill", "#fff");
+  g.append("g").call(brush);
+
+
+      filteredVideos = filterVideosByGenres(); // Refilter videos by genres
+      videoCounts = computeVideoCounts(filteredVideos); // Recalculate video counts
+      filteredData = [...videoCounts]; // Reset filtered data
+      renderPlot(filteredData); // Update the main plot
+      renderAdditionalBarPlot(filteredData); // Update the additional bar plot
+
+  return filteredData;
+}
+
+// Function for the additional bar plot
+function renderAdditionalBarPlot(filteredData) {
+  const barPlot = Plot.plot({
+    height: 300,
+    width: 800,
+    x: {
+      label: "Year",
+      tickFormat: (d, i, values) => {
+        const interval = Math.ceil(values.length / 10); // Show approximately 10 ticks
+        return i % interval === 0 ? d.toString() : ""; 
+      },
+      grid: true,
+    },
+    y: { label: "Count", grid: true },
+    marks: [
+      Plot.barY(filteredData, { x: "year", y: "count", fill: "#D55E00" }), // Orange bars
+    ],
+    style: {
+      background: "#121212", // Black background
+      color: "#fff", // White text
+    },
+  });
+
+  const additionalContainer = document.getElementById("additional-plot-container");
+  additionalContainer.innerHTML = ""; // Clear previous plot
+  additionalContainer.appendChild(barPlot);
+}
+
+// Pass the dynamic function for genre selection
+createSlidingWindowPlot(videos, selectedGenres, "line-chart-container", "brush-chart");
+
 ```
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #121212;
+      color: #fff;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .chart-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .plot-container {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="chart-container">
+    <h1>Videos over the Years</h1>
+    <div id="line-chart-container"></div>
+    <svg id="brush-chart" width="800" height="100"></svg>
+    <div id="additional-plot-container"></div>
+  </div>
+
+
 
 <div id="videoEffectsTree"></div>
 

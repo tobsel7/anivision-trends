@@ -1,5 +1,5 @@
 ---
-theme: coffee
+theme: dashboard
 title: Facet Chart
 toc: false
 ---
