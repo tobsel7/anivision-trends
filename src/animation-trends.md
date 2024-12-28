@@ -32,10 +32,6 @@ const productionCountries = new Map([
 ```
 
 ```js
-console.log(new Set(segments.map(s => s.annotations_label)))
-```
-
-```js
 const segmentTypes = new Set([
     "Still Image",
     "Animation",
@@ -85,7 +81,7 @@ const selectedProductionCountries = view(Inputs.select(
     {
         multiple: true,
         label: "Selected Production Countries",
-        value: productionCountries
+        value: productionCountries.values()
     }
 ))
 ```
