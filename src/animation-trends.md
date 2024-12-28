@@ -24,6 +24,11 @@ const segments = videosAndSegments.videoSegments
 
 ```js
 const genres = new Set(videos.flatMap(v => v.genres))
+const productionCountries = new Map([
+    ["Western Germany", 1], 
+    ["Eastern Germany", 3],
+    ["Austria", 2]
+])
 ```
 
 # Animation Trends 🎥
@@ -37,10 +42,35 @@ const selectedGenres = view(Inputs.select(
         value: genres
     }
 ))
+const selectedProductionCountries = view(Inputs.select(
+    productionCountries,
+    {
+        multiple: true,
+        label: "Selected Production Countries",
+        value: productionCountries
+    }
+))
 ```
 
 ```js
-function createSlidingWindowPlot(videos, getSelectedGenres, containerId, brushContainerId, width = 800, height = 300) {
+const filteredVideos = videos
+    .filter((v) => v.genres.some((g) => selectedGenres.includes(g)))
+    .filter(v => selectedProductionCountries.includes(v.production_country))
+```
+
+```js
+const segmentsForFilteredVideos =
+    filteredVideos.map(
+        v => segments.filter(s => s.video_id === v.video_id)
+    ).filter(
+        segments => segments.length > 0
+    )
+console.log(segmentsForFilteredVideos)
+// TODO build tree of segment counts for tree visualization
+```
+
+```js
+function createSlidingWindowPlot(videos, getSelectedGenres, getSelectedProductionCountries, containerId, brushContainerId, width = 800, height = 300) {
   // Compute grouped video counts
   const computeVideoCounts = (data) => {
     const groupedVideos = d3.group(data, (v) => v.year);
@@ -52,16 +82,18 @@ function createSlidingWindowPlot(videos, getSelectedGenres, containerId, brushCo
   // Initial data for the brush chart (always unfiltered)
   const allVideoCounts = computeVideoCounts(videos);
 
-  // Filter videos based on selected genres
-  const filterVideosByGenres = (genres) => {
-    return videos.filter((v) => v.genres.some((g) => genres.includes(g)));
+  // Filter videos based on selections
+  const filterVideosBySelection = (genres, productionCountries) => {
+    return videos
+        .filter((v) => v.genres.some((g) => genres.includes(g)))
+        .filter(v => productionCountries.includes(v.production_country))
   };
 
   // Store the previous selection of genres
   let previousGenres = [...getSelectedGenres];
-
-  // Initial filtering for main chart
-  let filteredVideos = filterVideosByGenres(previousGenres); // Filter videos based on genres
+  let previousProductionCountries = [...getSelectedProductionCountries];
+  
+    // Initial filtering for main chart
   let videoCounts = computeVideoCounts(filteredVideos); // Filtered counts for the main chart
   let filteredData = [...videoCounts]; // Data to render on the main chart
 
@@ -148,15 +180,16 @@ function createSlidingWindowPlot(videos, getSelectedGenres, containerId, brushCo
   };
 
   renderBrush(); // Render the brush initially
-
-  // Update plots when selected genres change
+    
+  // Update plots when selections change
   const updatePlots = () => {
-    const currentGenres = [...getSelectedGenres]; // Get the current genres
-    if (JSON.stringify(currentGenres) !== JSON.stringify(previousGenres)) {
+    const currentGenres = [...getSelectedGenres];
+    const currentProductionCountries = [...getSelectedProductionCountries];
+
+      if (JSON.stringify(currentGenres) !== JSON.stringify(previousGenres)) {
       // Check if the selection has changed
       previousGenres = [...currentGenres]; // Update the stored genres
       g.call(brush.move, null); // Reset the brush selection
-      filteredVideos = filterVideosByGenres(currentGenres); // Refilter videos by genres
       videoCounts = computeVideoCounts(filteredVideos); // Recompute video counts
       filteredData = [...videoCounts]; // Reset filtered data
       renderPlot(filteredData); // Update the main plot
@@ -200,7 +233,7 @@ function renderAdditionalBarPlot(filteredData) {
 }
 
 // Pass the dynamic function for genre selection
-createSlidingWindowPlot(videos, selectedGenres, "line-chart-container", "brush-chart");
+createSlidingWindowPlot(videos, selectedGenres, selectedProductionCountries, "line-chart-container", "brush-chart");
 
 ```
   <style>
@@ -217,12 +250,7 @@ createSlidingWindowPlot(videos, selectedGenres, "line-chart-container", "brush-c
       flex-direction: column;
       align-items: center;
     }
-
-    .plot-container {
-      margin-top: 20px;
-    }
   </style>
-</head>
 <body>
   <div class="chart-container">
     <h1>Videos over the Years</h1>
@@ -230,14 +258,9 @@ createSlidingWindowPlot(videos, selectedGenres, "line-chart-container", "brush-c
     <svg id="brush-chart" width="800" height="100"></svg>
     <div id="additional-plot-container"></div>
   </div>
-
-
-
 <div id="videoEffectsTree"></div>
 
-
 ```js
-
 const filteredVideEffects = {
     "id": 1,
     "name":"Image Type",
