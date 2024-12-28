@@ -12,14 +12,14 @@
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
 <link rel="stylesheet" type="text/css" href="./_observablehq/theme-air,near-midnight,alt,wide.db1cdf55.css">
 <link rel="stylesheet" type="text/css" href="./_observablehq/stdlib/inputs.ea9fd553.css">
-<link rel="modulepreload" href="./_observablehq/client.ba2b7788.js">
+<link rel="modulepreload" href="./_observablehq/client.7837edf1.js">
 <link rel="modulepreload" href="./_observablehq/runtime.9393ab6d.js">
 <link rel="modulepreload" href="./_observablehq/stdlib.95bfbf7e.js">
 <link rel="modulepreload" href="./_import/components/data_transformations.1b108a99.js">
 <link rel="modulepreload" href="./_node/unipept-visualizations@2.1.2/index.37540c86.js">
-<link rel="modulepreload" href="./_npm/d3@7.9.0/93fe06f7.js">
+<link rel="modulepreload" href="./_npm/d3@7.9.0/7055d4c5.js">
 <link rel="modulepreload" href="./_observablehq/stdlib/inputs.d397b6a8.js">
-<link rel="modulepreload" href="./_npm/@observablehq/plot@0.6.16/3ca91556.js">
+<link rel="modulepreload" href="./_npm/@observablehq/plot@0.6.16/e828d8c8.js">
 <link rel="modulepreload" href="./_npm/d3-dsv@3.0.1/407f7a1f.js">
 <link rel="modulepreload" href="./_npm/htl@0.3.1/063eb405.js">
 <link rel="modulepreload" href="./_npm/isoformat@0.2.1/c68fbd73.js">
@@ -34,7 +34,7 @@
 <link rel="modulepreload" href="./_npm/d3-drag@3.0.0/b22c5864.js">
 <link rel="modulepreload" href="./_npm/d3-ease@3.0.1/6f15f633.js">
 <link rel="modulepreload" href="./_npm/d3-fetch@3.0.1/ef1ec490.js">
-<link rel="modulepreload" href="./_npm/d3-force@3.0.0/60bb70b3.js">
+<link rel="modulepreload" href="./_npm/d3-force@3.0.0/5e1ff060.js">
 <link rel="modulepreload" href="./_npm/d3-format@3.1.0/5851d7ef.js">
 <link rel="modulepreload" href="./_npm/d3-geo@3.1.1/dcd02767.js">
 <link rel="modulepreload" href="./_npm/d3-hierarchy@3.1.2/f1db2593.js">
@@ -46,7 +46,7 @@
 <link rel="modulepreload" href="./_npm/d3-scale@4.0.2/567840a0.js">
 <link rel="modulepreload" href="./_npm/d3-scale-chromatic@3.1.0/cf9b720b.js">
 <link rel="modulepreload" href="./_npm/d3-selection@3.0.0/5dcd62f4.js">
-<link rel="modulepreload" href="./_npm/d3-shape@3.2.0/be692bd9.js">
+<link rel="modulepreload" href="./_npm/d3-shape@3.2.0/f8e03c56.js">
 <link rel="modulepreload" href="./_npm/d3-time@3.1.0/5bc129e1.js">
 <link rel="modulepreload" href="./_npm/d3-time-format@4.1.0/19c92b44.js">
 <link rel="modulepreload" href="./_npm/d3-timer@3.0.1/f31b5398.js">
@@ -59,11 +59,11 @@
 <link rel="modulepreload" href="./_npm/robust-predicates@3.0.2/8ac9039b.js">
 <script type="module">
 
-import {define} from "./_observablehq/client.ba2b7788.js";
+import {define} from "./_observablehq/client.7837edf1.js";
 import {registerFile} from "./_observablehq/stdlib.95bfbf7e.js";
 
-registerFile("./data/segments.csv", {"name":"./data/segments.csv","mimeType":"text/csv","path":"./_file/data/segments.9ae01672.csv","lastModified":1735383037770,"size":1036654});
-registerFile("./data/videos.csv", {"name":"./data/videos.csv","mimeType":"text/csv","path":"./_file/data/videos.eaff3335.csv","lastModified":1735383037770,"size":132080});
+registerFile("./data/segments.csv", {"name":"./data/segments.csv","mimeType":"text/csv","path":"./_file/data/segments.9ae01672.csv","lastModified":1735391397451,"size":1036654});
+registerFile("./data/videos.csv", {"name":"./data/videos.csv","mimeType":"text/csv","path":"./_file/data/videos.eaff3335.csv","lastModified":1735391397451,"size":132080});
 
 define({id: "a9175010", outputs: ["cleanUpData","VideosAndSegments","GetSegmentTypeText","hierarchy","uv"], body: async () => {
 const [{cleanUpData, VideosAndSegments, GetSegmentTypeText, hierarchy}, {default: uv}] = await Promise.all([import("./_import/components/data_transformations.1b108a99.js"), import("./_node/unipept-visualizations@2.1.2/index.37540c86.js")]);
@@ -95,6 +95,47 @@ const productionCountries = new Map([
 return {genres,productionCountries};
 }});
 
+define({id: "f93f1e42", inputs: ["segments","display"], body: async (segments,display) => {
+display(await(
+console.log(new Set(segments.map(s => s.annotations_label)))
+))
+}});
+
+define({id: "19daedbf", outputs: ["segmentTypes"], body: () => {
+const segmentTypes = new Set([
+    "Still Image",
+    "Animation",
+    "Live-Action",
+    "Hybrid Image",
+    "Graphic",
+    "Photographic",
+    "Cutout",
+    "Fade In",
+    "Fade Out",
+    "Slow Motion",
+    "Irrelevant",
+    "Uncertain",
+    "Limited Cel",
+    "scientific/technical image",
+    "dissolve animation",
+    "3D",
+    "Colour Matte",
+    "Puppets",
+    "2D",
+    "Hybrid",
+    "Timelapse",
+    "Full Cel",
+    "Dissolve",
+    "Animated Transition",
+    "Immobile Objects",
+    "Stop Trick",
+    "Cutout visible",
+    "Text",
+    "Clay"
+])
+return {segmentTypes};
+}});
+
 define({id: "fb36d4cc", inputs: ["view","Inputs","genres","productionCountries"], outputs: ["selectedGenres","selectedProductionCountries"], body: (view,Inputs,genres,productionCountries) => {
 const selectedGenres = view(Inputs.select(
     genres,
@@ -122,16 +163,16 @@ const filteredVideos = videos
 return {filteredVideos};
 }});
 
-define({id: "7a83df4a", inputs: ["filteredVideos","segments"], outputs: ["segmentsForFilteredVideos"], body: (filteredVideos,segments) => {
+define({id: "5fd59526", inputs: ["filteredVideos","d3","segments"], outputs: ["filteredVideoIds","segmentsForFilteredVideos"], body: (filteredVideos,d3,segments) => {
+const filteredVideoIds = new Set(filteredVideos.map(v => v.video_id))
 const segmentsForFilteredVideos =
-    filteredVideos.map(
-        v => segments.filter(s => s.video_id === v.video_id)
-    ).filter(
-        segments => segments.length > 0
+    d3.group(
+        segments.filter(
+            s => s.video_id && filteredVideoIds.has(s.video_id)
+        ),
+        s => s.annotations_label
     )
-console.log(segmentsForFilteredVideos)
-// TODO build tree of segment counts for tree visualization
-return {segmentsForFilteredVideos};
+return {filteredVideoIds,segmentsForFilteredVideos};
 }});
 
 define({id: "7946ee6f", inputs: ["d3","filteredVideos","Plot","videos","selectedGenres","selectedProductionCountries"], outputs: ["createSlidingWindowPlot","renderAdditionalBarPlot"], body: (d3,filteredVideos,Plot,videos,selectedGenres,selectedProductionCountries) => {
@@ -303,151 +344,24 @@ createSlidingWindowPlot(videos, selectedGenres, selectedProductionCountries, "li
 return {createSlidingWindowPlot,renderAdditionalBarPlot};
 }});
 
-define({id: "78f1d253", outputs: ["filteredVideEffects"], body: () => {
+define({id: "4d01b795", inputs: ["segmentTypes","segmentsForFilteredVideos"], outputs: ["segmentCounts","filteredVideEffects"], body: (segmentTypes,segmentsForFilteredVideos) => {
+const segmentCounts = new Map(segmentTypes.values().map(type => [type, segmentsForFilteredVideos.get(type)?.length || 0]));
+
+// TODO represent the real hierarchy and not this simple view
 const filteredVideEffects = {
     "id": 1,
-    "name":"Image Type",
-    "count": 130,
+    "name": "Image Type",
+    "count": Array.from(segmentCounts.values()).reduce((a, b) => a + b, 0),
     "selfCount": 0,
-    "children": [
-        {
-            "id": 2,
-            "name":"Animation",
-            "count": 120,
-            "selfCount": 0,
-            "children": [
-                {
-                    "id": 3,
-                    "name":"Drawn Animation",
-                    "count": 30,
-                    "selfCount": 30,
-                    "children": []
-                },
-                {
-                    "id": 4,
-                    "name":"Modified Base",
-                    "count": 50,
-                    "selfCount": 50,
-                    "children": []
-                },
-                {
-                    "id": 5,
-                    "name":"Direct/Cameraless",
-                    "count": 13,
-                    "selfCount": 13,
-                    "children": []
-                },
-                {
-                    "id": 6,
-                    "name":"Computer Animation",
-                    "count": 45,
-                    "selfCount": 45,
-                    "children": []
-                },
-                {
-                    "id": 7,
-                    "name":"Miscellaneous Animation",
-                    "count": 23,
-                    "selfCount": 23,
-                    "children": []
-                },
-                {
-                    "id": 8,
-                    "name":"Cutout",
-                    "count": 1,
-                    "selfCount": 1,
-                    "children": []
-                },
-                {
-                    "id": 9,
-                    "name":"Stop-Motion",
-                    "count": 4,
-                    "selfCount": 4,
-                    "children": []
-                },
-                {
-                    "id": 10,
-                    "name":"Time Manipulation",
-                    "count": 8,
-                    "selfCount": 8,
-                    "children": []
-                }
-            ]
-        },
-        {
-            "id": 11,
-            "name":"Hybrid Image",
-            "count": 3,
-            "selfCount": 3,
-            "children": []
-        },
-        {
-            "id": 12,
-            "name":"Live-Action",
-            "count": 17,
-            "selfCount": 17,
-            "children": []
-        },
-        {
-            "id": 13,
-            "name":"Still Image",
-            "count": 55,
-            "selfCount": 4,
-            "children": [
-                {
-                    "id": 14,
-                    "name":"Photographic",
-                    "count": 5,
-                    "selfCount": 5,
-                    "children": []
-                },
-                {
-                    "id": 15,
-                    "name":"Graphic",
-                    "count": 8,
-                    "selfCount": 8,
-                    "children": []
-                },
-                {
-                    "id": 16,
-                    "name":"Colour Matte",
-                    "count": 13,
-                    "selfCount": 13,
-                    "children": []
-                },
-                {
-                    "id": 17,
-                    "name":"Hybrid",
-                    "count": 22,
-                    "selfCount": 22,
-                    "children": []
-                },
-                {
-                    "id": 18,
-                    "name":"Uncertain",
-                    "count": 3,
-                    "selfCount": 3,
-                    "children": []
-                }
-            ]
-        },
-        {
-            "id": 19,
-            "name":"Irrelevant",
-            "count": 5,
-            "selfCount": 5,
-            "children": []
-        },
-        {
-            "id": 20,
-            "name":"Uncertain",
-            "count": 22,
-            "selfCount": 22,
-            "children": []
-        }
-    ]
-}
-return {filteredVideEffects};
+    "children": Array.from(segmentTypes).map((type, index) => ({
+        "id": index + 2,
+        "name": type,
+        "count": segmentCounts.get(type),
+        "selfCount": segmentCounts.get(type),
+        "children": []
+    }))
+};
+return {segmentCounts,filteredVideEffects};
 }});
 
 define({id: "e94edae2", inputs: ["uv","filteredVideEffects"], outputs: ["videoEffectsTree"], body: (uv,filteredVideEffects) => {
@@ -484,10 +398,12 @@ return {videoEffectsTree};
 <div class="observablehq observablehq--block"><!--:573b5598:--></div>
 <div class="observablehq observablehq--block"><!--:64e99ece:--></div>
 <div class="observablehq observablehq--block"><!--:f0c91ad7:--></div>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:f93f1e42:--></div>
+<div class="observablehq observablehq--block"><!--:19daedbf:--></div>
 <h1 id="animation-trends" tabindex="-1"><a class="observablehq-header-anchor" href="#animation-trends">Animation Trends 🎥</a></h1>
 <div class="observablehq observablehq--block"><!--:fb36d4cc:--></div>
 <div class="observablehq observablehq--block"><!--:49396511:--></div>
-<div class="observablehq observablehq--block"><!--:7a83df4a:--></div>
+<div class="observablehq observablehq--block"><!--:5fd59526:--></div>
 <div class="observablehq observablehq--block"><!--:7946ee6f:--></div>
   <style>
     body {
@@ -512,12 +428,12 @@ return {videoEffectsTree};
     <div id="additional-plot-container"></div>
   </div>
 <div id="videoEffectsTree"></div>
-<div class="observablehq observablehq--block"><!--:78f1d253:--></div>
+<div class="observablehq observablehq--block"><!--:4d01b795:--></div>
 <div class="observablehq observablehq--block"><!--:e94edae2:--></div>
 </main>
 <footer id="observablehq-footer">
 <nav><a rel="prev" href="./Segments"><span>Segments Test</span></a><a rel="next" href="./bubbe_chart"><span>Timeline with Bubble Chart Demo</span></a></nav>
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-12-28T10:50:47">Dec 28, 2024</a>.</div>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-12-28T13:10:07">Dec 28, 2024</a>.</div>
 </footer>
 </div>
 </body>
