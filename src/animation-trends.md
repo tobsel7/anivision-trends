@@ -31,6 +31,44 @@ const productionCountries = new Map([
 ])
 ```
 
+```js
+console.log(new Set(segments.map(s => s.annotations_label)))
+```
+
+```js
+const segmentTypes = new Set([
+    "Still Image",
+    "Animation",
+    "Live-Action",
+    "Hybrid Image",
+    "Graphic",
+    "Photographic",
+    "Cutout",
+    "Fade In",
+    "Fade Out",
+    "Slow Motion",
+    "Irrelevant",
+    "Uncertain",
+    "Limited Cel",
+    "scientific/technical image",
+    "dissolve animation",
+    "3D",
+    "Colour Matte",
+    "Puppets",
+    "2D",
+    "Hybrid",
+    "Timelapse",
+    "Full Cel",
+    "Dissolve",
+    "Animated Transition",
+    "Immobile Objects",
+    "Stop Trick",
+    "Cutout visible",
+    "Text",
+    "Clay"
+])
+```
+
 # Animation Trends 🎥
 
 ```js
@@ -59,14 +97,14 @@ const filteredVideos = videos
 ```
 
 ```js
+const filteredVideoIds = new Set(filteredVideos.map(v => v.video_id))
 const segmentsForFilteredVideos =
-    filteredVideos.map(
-        v => segments.filter(s => s.video_id === v.video_id)
-    ).filter(
-        segments => segments.length > 0
+    d3.group(
+        segments.filter(
+            s => s.video_id && filteredVideoIds.has(s.video_id)
+        ),
+        s => s.annotations_label
     )
-console.log(segmentsForFilteredVideos)
-// TODO build tree of segment counts for tree visualization
 ```
 
 ```js
@@ -261,149 +299,22 @@ createSlidingWindowPlot(videos, selectedGenres, selectedProductionCountries, "li
 <div id="videoEffectsTree"></div>
 
 ```js
+const segmentCounts = new Map(segmentTypes.values().map(type => [type, segmentsForFilteredVideos.get(type)?.length || 0]));
+
+// TODO represent the real hierarchy and not this simple view
 const filteredVideEffects = {
     "id": 1,
-    "name":"Image Type",
-    "count": 130,
+    "name": "Image Type",
+    "count": Array.from(segmentCounts.values()).reduce((a, b) => a + b, 0),
     "selfCount": 0,
-    "children": [
-        {
-            "id": 2,
-            "name":"Animation",
-            "count": 120,
-            "selfCount": 0,
-            "children": [
-                {
-                    "id": 3,
-                    "name":"Drawn Animation",
-                    "count": 30,
-                    "selfCount": 30,
-                    "children": []
-                },
-                {
-                    "id": 4,
-                    "name":"Modified Base",
-                    "count": 50,
-                    "selfCount": 50,
-                    "children": []
-                },
-                {
-                    "id": 5,
-                    "name":"Direct/Cameraless",
-                    "count": 13,
-                    "selfCount": 13,
-                    "children": []
-                },
-                {
-                    "id": 6,
-                    "name":"Computer Animation",
-                    "count": 45,
-                    "selfCount": 45,
-                    "children": []
-                },
-                {
-                    "id": 7,
-                    "name":"Miscellaneous Animation",
-                    "count": 23,
-                    "selfCount": 23,
-                    "children": []
-                },
-                {
-                    "id": 8,
-                    "name":"Cutout",
-                    "count": 1,
-                    "selfCount": 1,
-                    "children": []
-                },
-                {
-                    "id": 9,
-                    "name":"Stop-Motion",
-                    "count": 4,
-                    "selfCount": 4,
-                    "children": []
-                },
-                {
-                    "id": 10,
-                    "name":"Time Manipulation",
-                    "count": 8,
-                    "selfCount": 8,
-                    "children": []
-                }
-            ]
-        },
-        {
-            "id": 11,
-            "name":"Hybrid Image",
-            "count": 3,
-            "selfCount": 3,
-            "children": []
-        },
-        {
-            "id": 12,
-            "name":"Live-Action",
-            "count": 17,
-            "selfCount": 17,
-            "children": []
-        },
-        {
-            "id": 13,
-            "name":"Still Image",
-            "count": 55,
-            "selfCount": 4,
-            "children": [
-                {
-                    "id": 14,
-                    "name":"Photographic",
-                    "count": 5,
-                    "selfCount": 5,
-                    "children": []
-                },
-                {
-                    "id": 15,
-                    "name":"Graphic",
-                    "count": 8,
-                    "selfCount": 8,
-                    "children": []
-                },
-                {
-                    "id": 16,
-                    "name":"Colour Matte",
-                    "count": 13,
-                    "selfCount": 13,
-                    "children": []
-                },
-                {
-                    "id": 17,
-                    "name":"Hybrid",
-                    "count": 22,
-                    "selfCount": 22,
-                    "children": []
-                },
-                {
-                    "id": 18,
-                    "name":"Uncertain",
-                    "count": 3,
-                    "selfCount": 3,
-                    "children": []
-                }
-            ]
-        },
-        {
-            "id": 19,
-            "name":"Irrelevant",
-            "count": 5,
-            "selfCount": 5,
-            "children": []
-        },
-        {
-            "id": 20,
-            "name":"Uncertain",
-            "count": 22,
-            "selfCount": 22,
-            "children": []
-        }
-    ]
-}
+    "children": Array.from(segmentTypes).map((type, index) => ({
+        "id": index + 2,
+        "name": type,
+        "count": segmentCounts.get(type),
+        "selfCount": segmentCounts.get(type),
+        "children": []
+    }))
+};
 ```
 
 ```js
