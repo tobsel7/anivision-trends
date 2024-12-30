@@ -4,89 +4,338 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="generator" content="Observable Framework v1.13.0">
-<title>AniVision Trends</title>
+<title>Animation Trends | AniVision Trends</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
-<link rel="preload" as="style" href="./_observablehq/theme-air,near-midnight.dcdbf18e.css">
+<link rel="preload" as="style" href="./_observablehq/theme-air,near-midnight,alt,wide.db1cdf55.css">
+<link rel="preload" as="style" href="./_observablehq/stdlib/inputs.ea9fd553.css">
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
-<link rel="stylesheet" type="text/css" href="./_observablehq/theme-air,near-midnight.dcdbf18e.css">
-<link rel="modulepreload" href="./_observablehq/client.0f6292e2.js">
+<link rel="stylesheet" type="text/css" href="./_observablehq/theme-air,near-midnight,alt,wide.db1cdf55.css">
+<link rel="stylesheet" type="text/css" href="./_observablehq/stdlib/inputs.ea9fd553.css">
+<link rel="modulepreload" href="./_observablehq/client.78aba98c.js">
 <link rel="modulepreload" href="./_observablehq/runtime.9393ab6d.js">
 <link rel="modulepreload" href="./_observablehq/stdlib.95bfbf7e.js">
-<link rel="modulepreload" href="./_npm/@observablehq/plot@0.6.16/b024f9a3.js">
-<link rel="modulepreload" href="./_npm/d3@7.9.0/9a5b1801.js">
+<link rel="modulepreload" href="./_import/components/data_transformations.bdb7bf08.js">
+<link rel="modulepreload" href="./_node/unipept-visualizations@2.1.2/index.37540c86.js">
+<link rel="modulepreload" href="./_npm/d3@7.9.0/cea656b4.js">
+<link rel="modulepreload" href="./_observablehq/stdlib/inputs.d397b6a8.js">
+<link rel="modulepreload" href="./_npm/@observablehq/plot@0.6.16/ebe2c5ad.js">
+<link rel="modulepreload" href="./_npm/d3-dsv@3.0.1/407f7a1f.js">
+<link rel="modulepreload" href="./_npm/htl@0.3.1/063eb405.js">
 <link rel="modulepreload" href="./_npm/isoformat@0.2.1/c68fbd73.js">
-<link rel="modulepreload" href="./_npm/interval-tree-1d@1.0.4/a62ae5ce.js">
-<link rel="modulepreload" href="./_npm/d3-array@3.2.4/e95f898e.js">
+<link rel="modulepreload" href="./_npm/d3-array@3.2.4/37839b6a.js">
 <link rel="modulepreload" href="./_npm/d3-axis@3.0.0/bd0afa17.js">
 <link rel="modulepreload" href="./_npm/d3-brush@3.0.0/5830b12a.js">
 <link rel="modulepreload" href="./_npm/d3-chord@3.0.1/84d7b8e9.js">
 <link rel="modulepreload" href="./_npm/d3-color@3.1.0/2c0cdfa2.js">
-<link rel="modulepreload" href="./_npm/d3-contour@4.0.2/626bedc4.js">
+<link rel="modulepreload" href="./_npm/d3-contour@4.0.2/d496a3b3.js">
 <link rel="modulepreload" href="./_npm/d3-delaunay@6.0.4/00c41b5d.js">
 <link rel="modulepreload" href="./_npm/d3-dispatch@3.0.1/b5f7cdc6.js">
 <link rel="modulepreload" href="./_npm/d3-drag@3.0.0/b22c5864.js">
-<link rel="modulepreload" href="./_npm/d3-dsv@3.0.1/407f7a1f.js">
 <link rel="modulepreload" href="./_npm/d3-ease@3.0.1/6f15f633.js">
 <link rel="modulepreload" href="./_npm/d3-fetch@3.0.1/ef1ec490.js">
-<link rel="modulepreload" href="./_npm/d3-force@3.0.0/60bb70b3.js">
+<link rel="modulepreload" href="./_npm/d3-force@3.0.0/5e1ff060.js">
 <link rel="modulepreload" href="./_npm/d3-format@3.1.0/5851d7ef.js">
-<link rel="modulepreload" href="./_npm/d3-geo@3.1.1/dcd02767.js">
+<link rel="modulepreload" href="./_npm/d3-geo@3.1.1/5e427f4b.js">
 <link rel="modulepreload" href="./_npm/d3-hierarchy@3.1.2/f1db2593.js">
 <link rel="modulepreload" href="./_npm/d3-interpolate@3.0.1/034b7bcb.js">
 <link rel="modulepreload" href="./_npm/d3-path@3.1.0/4bb53638.js">
 <link rel="modulepreload" href="./_npm/d3-polygon@3.0.1/bbafde58.js">
 <link rel="modulepreload" href="./_npm/d3-quadtree@3.0.1/aa5b35a8.js">
 <link rel="modulepreload" href="./_npm/d3-random@3.0.1/32c7fec2.js">
-<link rel="modulepreload" href="./_npm/d3-scale@4.0.2/567840a0.js">
+<link rel="modulepreload" href="./_npm/d3-scale@4.0.2/2d9e63f3.js">
 <link rel="modulepreload" href="./_npm/d3-scale-chromatic@3.1.0/cf9b720b.js">
 <link rel="modulepreload" href="./_npm/d3-selection@3.0.0/5dcd62f4.js">
 <link rel="modulepreload" href="./_npm/d3-shape@3.2.0/be692bd9.js">
-<link rel="modulepreload" href="./_npm/d3-time@3.1.0/5bc129e1.js">
-<link rel="modulepreload" href="./_npm/d3-time-format@4.1.0/19c92b44.js">
+<link rel="modulepreload" href="./_npm/d3-time@3.1.0/3a9ac1c1.js">
+<link rel="modulepreload" href="./_npm/d3-time-format@4.1.0/28d1ef76.js">
 <link rel="modulepreload" href="./_npm/d3-timer@3.0.1/f31b5398.js">
 <link rel="modulepreload" href="./_npm/d3-transition@3.0.1/8debb4ba.js">
 <link rel="modulepreload" href="./_npm/d3-zoom@3.0.0/4b0cc581.js">
-<link rel="modulepreload" href="./_npm/binary-search-bounds@2.0.5/1ee6c50d.js">
+<link rel="modulepreload" href="./_npm/interval-tree-1d@1.0.4/a62ae5ce.js">
 <link rel="modulepreload" href="./_npm/internmap@2.0.3/5eed35fd.js">
 <link rel="modulepreload" href="./_npm/delaunator@5.0.1/e67acb27.js">
+<link rel="modulepreload" href="./_npm/binary-search-bounds@2.0.5/1ee6c50d.js">
 <link rel="modulepreload" href="./_npm/robust-predicates@3.0.2/8ac9039b.js">
 <script type="module">
 
-import {define} from "./_observablehq/client.0f6292e2.js";
+import {define} from "./_observablehq/client.78aba98c.js";
+import {registerFile} from "./_observablehq/stdlib.95bfbf7e.js";
 
-define({id: "7935742a", mode: "inline", inputs: ["resize","Plot","aapl","display"], body: async (resize,Plot,aapl,display) => {
-display(await(
-    resize((width) => Plot.plot({
-      title: "Your awesomeness over time 🚀",
-      subtitle: "Up and to the right!",
-      width,
-      y: {grid: true, label: "Awesomeness"},
-      marks: [
-        Plot.ruleY([0]),
-        Plot.lineY(aapl, {x: "Date", y: "Close", tip: true})
-      ]
-    }))
-  
-))
+registerFile("./data/segments.csv", {"name":"./data/segments.csv","mimeType":"text/csv","path":"./_file/data/segments.9ae01672.csv","lastModified":1735593371271,"size":1036654});
+registerFile("./data/videos.csv", {"name":"./data/videos.csv","mimeType":"text/csv","path":"./_file/data/videos.eaff3335.csv","lastModified":1735593371271,"size":132080});
+
+define({id: "3c9e7410", outputs: ["createLeafFirstArray","cleanUpData","VideosAndSegments","GetSegmentTypeText","getChildTypes","hierarchy","uv"], body: async () => {
+const [{createLeafFirstArray, cleanUpData, VideosAndSegments, GetSegmentTypeText, getChildTypes, hierarchy}, {default: uv}] = await Promise.all([import("./_import/components/data_transformations.bdb7bf08.js"), import("./_node/unipept-visualizations@2.1.2/index.37540c86.js")]);
+
+return {createLeafFirstArray,cleanUpData,VideosAndSegments,GetSegmentTypeText,getChildTypes,hierarchy,uv};
 }});
 
-define({id: "699041c1", mode: "inline", inputs: ["resize","Plot","penguins","display"], body: async (resize,Plot,penguins,display) => {
-display(await(
-    resize((width) => Plot.plot({
-      title: "How big are penguins, anyway? 🐧",
-      width,
-      grid: true,
-      x: {label: "Body mass (g)"},
-      y: {label: "Flipper length (mm)"},
-      color: {legend: true},
-      marks: [
-        Plot.linearRegressionY(penguins, {x: "body_mass_g", y: "flipper_length_mm", stroke: "species"}),
-        Plot.dot(penguins, {x: "body_mass_g", y: "flipper_length_mm", stroke: "species", tip: true})
-      ]
-    }))
-  
+define({id: "573b5598", inputs: ["FileAttachment"], outputs: ["videosCsv","segmentsCsv"], body: async (FileAttachment) => {
+const videosCsv = await FileAttachment("./data/videos.csv").csv({typed: true})
+const segmentsCsv = await FileAttachment("./data/segments.csv").csv({typed: true})
+return {videosCsv,segmentsCsv};
+}});
+
+define({id: "64e99ece", inputs: ["VideosAndSegments","videosCsv","segmentsCsv","d3"], outputs: ["videosAndSegments","videos","segments"], body: (VideosAndSegments,videosCsv,segmentsCsv,d3) => {
+const videosAndSegments = new VideosAndSegments(videosCsv, segmentsCsv, d3)
+
+const videos = videosAndSegments.cleanedUpVideos
+const segments = videosAndSegments.videoSegments
+return {videosAndSegments,videos,segments};
+}});
+
+define({id: "f0c91ad7", inputs: ["videos"], outputs: ["genres","productionCountries"], body: (videos) => {
+const genres = new Set(videos.flatMap(v => v.genres))
+const productionCountries = new Map([
+    ["Western Germany", 1], 
+    ["Eastern Germany", 3],
+    ["Austria", 2]
+])
+return {genres,productionCountries};
+}});
+
+define({id: "19daedbf", outputs: ["segmentTypes"], body: () => {
+const segmentTypes = new Set([
+    "Still Image",
+    "Animation",
+    "Live-Action",
+    "Hybrid Image",
+    "Graphic",
+    "Photographic",
+    "Cutout",
+    "Fade In",
+    "Fade Out",
+    "Slow Motion",
+    "Irrelevant",
+    "Uncertain",
+    "Limited Cel",
+    "scientific/technical image",
+    "dissolve animation",
+    "3D",
+    "Colour Matte",
+    "Puppets",
+    "2D",
+    "Hybrid",
+    "Timelapse",
+    "Full Cel",
+    "Dissolve",
+    "Animated Transition",
+    "Immobile Objects",
+    "Stop Trick",
+    "Cutout visible",
+    "Text",
+    "Clay"
+])
+return {segmentTypes};
+}});
+
+define({id: "a247846a", inputs: ["view","Inputs","genres","productionCountries"], outputs: ["selectedGenres","selectedProductionCountries"], body: (view,Inputs,genres,productionCountries) => {
+const selectedGenres = view(Inputs.select(
+    genres,
+    {
+        multiple: true,
+        label: "Selected Genres",
+        value: genres
+    }
 ))
+const selectedProductionCountries = view(Inputs.select(
+    productionCountries,
+    {
+        multiple: true,
+        label: "Selected Production Countries",
+        value: productionCountries.values()
+    }
+))
+return {selectedGenres,selectedProductionCountries};
+}});
+
+define({id: "49396511", inputs: ["videos","selectedGenres","selectedProductionCountries"], outputs: ["filteredVideos"], body: (videos,selectedGenres,selectedProductionCountries) => {
+const filteredVideos = videos
+    .filter((v) => v.genres.some((g) => selectedGenres.includes(g)))
+    .filter(v => selectedProductionCountries.includes(v.production_country))
+return {filteredVideos};
+}});
+
+define({id: "7468e75d", inputs: ["filteredVideos","d3","segments"], outputs: ["filteredVideoIds","segmentsForFilteredVideos"], body: (filteredVideos,d3,segments) => {
+const filteredVideoIds = new Set(filteredVideos.map(v => v.video_id))
+const segmentsForFilteredVideos =
+    d3.group(
+        segments.filter(
+            s => s.video_id && filteredVideoIds.has(s.video_id)
+        ),
+        s => s.annotations_label //TODO should be segment_type_number
+    )
+return {filteredVideoIds,segmentsForFilteredVideos};
+}});
+
+define({id: "d65f1934", inputs: ["d3","filteredVideos"], outputs: ["videosYearGroup","videoYearlyCounts"], body: (d3,filteredVideos) => {
+const videosYearGroup = d3.group(filteredVideos, (v) => v.year);
+const videoYearlyCounts = Array.from(videosYearGroup, ([year, items]) => ({year, count: items.length})).sort(
+    (a, b) => a.year - b.year
+);
+return {videosYearGroup,videoYearlyCounts};
+}});
+
+define({id: "72e7e46c", inputs: ["Plot","d3","videoYearlyCounts"], outputs: ["updateLineChart"], body: (Plot,d3,videoYearlyCounts) => {
+function updateLineChart(data) {
+    const lineChart = Plot.plot({
+        width: 800,
+        height: 300,
+        x: {label: "Year", tickFormat: d3.format("d"), grid: true},
+        y: {label: "Count", grid: true},
+        marks: [
+            Plot.line(data, {x: "year", y: "count", stroke: "#56B4E9", strokeWidth: 2}),
+            Plot.dot(data, {x: "year", y: "count", fill: "#D55E00"}),
+        ],
+        style: {
+            background: "#121212",
+            color: "#fff",
+            fontFamily: "Arial, sans-serif",
+        },
+    });
+    const chartContainer = document.getElementById("line-chart-container");
+    if (chartContainer.firstChild) {
+        chartContainer.replaceChild(lineChart, chartContainer.firstChild);
+    } else {
+        chartContainer.appendChild(lineChart);
+    }
+}
+
+updateLineChart(videoYearlyCounts);
+return {updateLineChart};
+}});
+
+define({id: "d6fc99be", inputs: ["createLeafFirstArray","getChildTypes"], outputs: ["buildTree"], body: (createLeafFirstArray,getChildTypes) => {
+function buildTree(data, hierarchy) {
+    let idCounter = 1;
+    const nodeMap = new Map(); // Map to store id-to-node mapping
+
+    const leafFirstArray = createLeafFirstArray(hierarchy);
+    function createNode(name, id, children = []) {
+        const countChildrenNodes = (children || []).reduce((sum, child) => sum + child.count, 0);
+       return {
+            id,
+            name,
+            count:(data.get(name) || 0)+countChildrenNodes,
+            selfCount: (data.get(name) || 0),
+            children: (children || []).filter(child => child.count > 0)
+        };
+    }
+
+    function getAllChildNodes(childMap, nodeMap) {
+        const childNodes = [];
+        for (const key of childMap.keys()) {
+            const id = key;
+            if (nodeMap.has(id)) {
+                childNodes.push(nodeMap.get(id)); // Add node to result array
+            }
+        }
+        return childNodes;
+    }
+
+    for (const entry of leafFirstArray) {
+        const { id, name, parent } = entry;
+        const currentChildMap = getChildTypes(leafFirstArray, id);
+        const childNodes = getAllChildNodes(currentChildMap, nodeMap);
+        const newNode = createNode(name, id, childNodes);
+        if (newNode.count > 0) {
+            nodeMap.set(id, newNode);
+        }
+    }
+    return nodeMap.get("1");
+}
+return {buildTree};
+}});
+
+define({id: "cb2b63c0", inputs: ["buildTree","hierarchy","uv","segmentTypes","segmentsForFilteredVideos"], outputs: ["updateTreeView","segmentCounts"], body: (buildTree,hierarchy,uv,segmentTypes,segmentsForFilteredVideos) => {
+function updateTreeView(data) {
+    const filteredVideEffects = buildTree(data, hierarchy);
+    const videoEffectsTree = document.getElementById("videoEffectsTree");
+    new uv.Treeview(videoEffectsTree, filteredVideEffects, {
+        width: videoEffectsTree.clientWidth,
+        height: videoEffectsTree.clientHeight
+    });
+}
+const segmentCounts = new Map(segmentTypes.values().map(type => [type, segmentsForFilteredVideos.get(type)?.length || 0]));
+updateTreeView(segmentCounts)
+return {updateTreeView,segmentCounts};
+}});
+
+define({id: "99a228de", inputs: ["Inputs","productionCountries","filteredVideos"], outputs: ["updateVideoTable"], body: (Inputs,productionCountries,filteredVideos) => {
+function updateVideoTable(filteredVideos) {
+    const table = Inputs.table(filteredVideos.map(v => {
+        return {
+            "Title": v.title,
+            "Year": v.year.toString(),
+            "Genres": v.genres.join(", "),
+            "Production Country": Array.from(productionCountries.keys()).find(k => productionCountries.get(k) === v.production_country)
+        }
+    }));
+    const tableContainer = document.getElementById("filteredVideosTable");
+    if (tableContainer.firstChild) {
+        tableContainer.replaceChild(table, tableContainer.firstChild);
+    } else {
+        tableContainer.appendChild(table);
+    }
+}
+
+updateVideoTable(filteredVideos);
+return {updateVideoTable};
+}});
+
+define({id: "e5c91a1b", inputs: ["Plot","d3","videoYearlyCounts","updateLineChart","videosYearGroup","segments","segmentTypes","updateTreeView","updateVideoTable","filteredVideos"], outputs: ["barPlot","brush","brushChartContainer"], body: (Plot,d3,videoYearlyCounts,updateLineChart,videosYearGroup,segments,segmentTypes,updateTreeView,updateVideoTable,filteredVideos) => {
+const barPlot = Plot.plot({
+    width: 800,
+    height: 100,
+    x: {
+        label: "Year",
+        tickFormat: d3.format("d"),
+        grid: false,
+        ticks: d3.ticks(d3.min(videoYearlyCounts, d => d.year), d3.max(videoYearlyCounts, d => d.year), 10)
+    },
+    y: { label: "Count", grid: true },
+    marks: [
+        Plot.barY(videoYearlyCounts, { x: "year", y: "count", fill: "#56B4E9" }),
+    ],
+    style: {
+        background: "#121212",
+        color: "#fff",
+        fontFamily: "Arial, sans-serif",
+    },
+});
+
+const brush = d3.brushX()
+    .extent([[0, 0], [800, 100]])
+    .on("brush end", ({ selection }) => {
+        if (selection) {
+            const [x0, x1] = selection.map(d3.scaleLinear()
+                .domain(d3.extent(videoYearlyCounts, d => d.year))
+                .range([0, 800])
+                .invert);
+            const filteredCounts = videoYearlyCounts.filter(d => d.year >= x0 && d.year <= x1);
+            updateLineChart(filteredCounts);
+            const filteredVideoIds = new Set(filteredCounts.flatMap(d => videosYearGroup.get(d.year).map(v => v.video_id)));
+            const filteredSegments = segments.filter(s => filteredVideoIds.has(s.video_id));
+            const newSegmentCounts = new Map(segmentTypes.values().map(type => [type, filteredSegments.filter(s => s.annotations_label === type).length]));
+
+            updateTreeView(newSegmentCounts);
+            updateVideoTable(filteredVideos.filter(v => filteredVideoIds.has(v.video_id)));
+        }
+    });
+
+d3.select(barPlot)
+    .append("g")
+    .attr("class", "brush")
+    .call(brush);
+
+const brushChartContainer = document.getElementById("brush-chart");
+if (brushChartContainer.firstChild) {
+    brushChartContainer.replaceChild(barPlot, brushChartContainer.firstChild);
+} else {
+    brushChartContainer.appendChild(barPlot);
+}
+return {barPlot,brush,brushChartContainer};
 }});
 
 </script>
@@ -111,87 +360,92 @@ display(await(
 <script>{const e=document.querySelector("#observablehq-sidebar"),t=document.querySelector("#observablehq-sidebar-toggle"),r=sessionStorage.getItem("observablehq-sidebar");r?t.checked=r==="true":t.indeterminate=!0;for(const o of document.querySelectorAll("#observablehq-sidebar summary")){const s=o.parentElement;switch(sessionStorage.getItem(`observablehq-sidebar:${o.textContent}`)){case"true":s.open=!0;break;case"false":s.classList.contains("observablehq-section-active")||(s.open=!1);break}}addEventListener("beforeunload",()=>sessionStorage.setItem("observablehq-sidebar-scrolly",`${e.scrollTop}`));const a=sessionStorage.getItem("observablehq-sidebar-scrolly");a!=null&&(e.style.cssText="overflow: hidden;",e.scrollTop=+a,e.style.cssText="");}</script>
 <div id="observablehq-center">
 <main id="observablehq-main" class="observablehq">
-<div class="hero">
-  <h1>Anivision Trends</h1>
-  <h2>Welcome to your new app! Edit&nbsp;<code style="font-size: 90%;">src/index.md</code> to change this page.</h2>
-  <a href="https://observablehq.com/framework/getting-started" target="_blank" rel="noopener noreferrer">Get started<span style="display: inline-block; margin-left: 0.25rem;">↗︎</span></a>
-</div>
-<div class="grid grid-cols-2" style="grid-auto-rows: 504px;">
-  <div class="card"><observablehq-loading></observablehq-loading><!--:7935742a:--></div>
-  <div class="card"><observablehq-loading></observablehq-loading><!--:699041c1:--></div>
-</div>
-<hr>
-<h2 id="next-steps" tabindex="-1"><a class="observablehq-header-anchor" href="#next-steps">Next steps</a></h2>
-<p>Here are some ideas of things you could try…</p>
-<div class="grid grid-cols-4">
-  <div class="card">
-    Chart your own data using <a href="https://observablehq.com/framework/lib/plot" target="_blank" rel="noopener noreferrer"><code>Plot</code></a> and <a href="https://observablehq.com/framework/files" target="_blank" rel="noopener noreferrer"><code>FileAttachment</code></a>. Make it responsive using <a href="https://observablehq.com/framework/javascript#resize(render)" target="_blank" rel="noopener noreferrer"><code>resize</code></a>.
-  </div>
-  <div class="card">
-    Create a <a href="https://observablehq.com/framework/project-structure" target="_blank" rel="noopener noreferrer">new page</a> by adding a Markdown file (<code>whatever.md</code>) to the <code>src</code> folder.
-  </div>
-  <div class="card">
-    Add a drop-down menu using <a href="https://observablehq.com/framework/inputs/select" target="_blank" rel="noopener noreferrer"><code>Inputs.select</code></a> and use it to filter the data shown in a chart.
-  </div>
-  <div class="card">
-    Write a <a href="https://observablehq.com/framework/loaders" target="_blank" rel="noopener noreferrer">data loader</a> that queries a local database or API, generating a data snapshot on build.
-  </div>
-  <div class="card">
-    Import a <a href="https://observablehq.com/framework/imports" target="_blank" rel="noopener noreferrer">recommended library</a> from npm, such as <a href="https://observablehq.com/framework/lib/leaflet" target="_blank" rel="noopener noreferrer">Leaflet</a>, <a href="https://observablehq.com/framework/lib/dot" target="_blank" rel="noopener noreferrer">GraphViz</a>, <a href="https://observablehq.com/framework/lib/tex" target="_blank" rel="noopener noreferrer">TeX</a>, or <a href="https://observablehq.com/framework/lib/duckdb" target="_blank" rel="noopener noreferrer">DuckDB</a>.
-  </div>
-  <div class="card">
-    Ask for help, or share your work or ideas, on our <a href="https://github.com/observablehq/framework/discussions" target="_blank" rel="noopener noreferrer">GitHub discussions</a>.
-  </div>
-  <div class="card">
-    Visit <a href="https://github.com/observablehq/framework" target="_blank" rel="noopener noreferrer">Framework on GitHub</a> and give us a star. Or file an issue if you’ve found a bug!
-  </div>
-</div>
-<style>
+<div class="observablehq observablehq--block"><!--:3c9e7410:--></div>
+<script src="https://cdn.jsdelivr.net/npm/unipept-visualizations@latest/dist/unipept-visualizations.js"></script>
+<div class="observablehq observablehq--block"><!--:573b5598:--></div>
+<div class="observablehq observablehq--block"><!--:64e99ece:--></div>
+<div class="observablehq observablehq--block"><!--:f0c91ad7:--></div>
+<div class="observablehq observablehq--block"><!--:19daedbf:--></div>
+<h1 id="animation-trends" tabindex="-1"><a class="observablehq-header-anchor" href="#animation-trends">Animation Trends 🎥</a></h1>
+<div class="observablehq observablehq--block"><!--:a247846a:--></div>
+<div class="observablehq observablehq--block"><!--:49396511:--></div>
+<div class="observablehq observablehq--block"><!--:7468e75d:--></div>
+<div class="observablehq observablehq--block"><!--:d65f1934:--></div>
+<div class="observablehq observablehq--block"><!--:72e7e46c:--></div>
+<div class="observablehq observablehq--block"><!--:d6fc99be:--></div>
+<div class="observablehq observablehq--block"><!--:cb2b63c0:--></div>
+<div class="observablehq observablehq--block"><!--:99a228de:--></div>
+<div class="observablehq observablehq--block"><!--:e5c91a1b:--></div>
 
-.hero {
+  <div class="chart-container">
+    <h1>Videos over the Years</h1>
+    <div id="line-chart-container"></div>
+    <svg id="brush-chart" width="800" height="100"></svg>
+    <div id="additional-plot-container"></div>
+  </div>
+  <h2>Used Video Effects</h2>
+  <div id="videoEffectsTreeContainer">
+    <div id="videoEffectsTree"></div>
+  </div>
+  <h2>Found Videos</h2>
+  <div id="filteredVideosTableContainer">
+    <div id="filteredVideosTable"></div>
+  </div>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #121212;
+  color: #fff;
+  margin: 0;
+  padding: 20px;
+}
+
+h1, h2 {
+  padding: 10px; /* Adjust the padding value as needed */
+}
+.chart-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: var(--sans-serif);
-  margin: 4rem 0 8rem;
-  text-wrap: balance;
-  text-align: center;
 }
 
-.hero h1 {
-  margin: 1rem 0;
-  padding: 1rem 0;
-  max-width: none;
-  font-size: 14vw;
-  font-weight: 900;
-  line-height: 1;
-  background: linear-gradient(30deg, var(--theme-foreground-focus), currentColor);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+#videoEffectsTreeContainer {
+  width: 100%;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px; /* Add margin to separate from the brush chart */
 }
 
-.hero h2 {
-  margin: 0;
-  max-width: 34em;
-  font-size: 20px;
-  font-style: initial;
-  font-weight: 500;
-  line-height: 1.5;
-  color: var(--theme-foreground-muted);
+#videoEffectsTree {
+  width: 100%;
+  height: 100%;
+  color: #000; /* Set text color to black */
+  background: #fff; /* Set background color to white */
 }
 
-@media (min-width: 640px) {
-  .hero h1 {
-    font-size: 90px;
-  }
+.uv-treeview-node {
+  color: #fff; /* Ensure text color is white for tree nodes */
 }
 
+#filteredVideosTableContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px; /* Add margin to separate from the video effects tree */
+}
+
+#filteredVideosTable {
+  width: 100%;
+}
 </style>
 </main>
 <footer id="observablehq-footer">
 <nav><a rel="next" href="./Segments"><span>Segments Test</span></a></nav>
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-12-30T10:59:28">Dec 30, 2024</a>.</div>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-12-30T21:16:21">Dec 30, 2024</a>.</div>
 </footer>
 </div>
 </body>
