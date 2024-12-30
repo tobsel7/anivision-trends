@@ -12,19 +12,19 @@
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
 <link rel="stylesheet" type="text/css" href="./_observablehq/theme-air,near-midnight,alt,wide.db1cdf55.css">
 <link rel="stylesheet" type="text/css" href="./_observablehq/stdlib/inputs.ea9fd553.css">
-<link rel="modulepreload" href="./_observablehq/client.924c06c8.js">
+<link rel="modulepreload" href="./_observablehq/client.0f6292e2.js">
 <link rel="modulepreload" href="./_observablehq/runtime.9393ab6d.js">
 <link rel="modulepreload" href="./_observablehq/stdlib.95bfbf7e.js">
-<link rel="modulepreload" href="./_import/components/data_transformations.1b108a99.js">
+<link rel="modulepreload" href="./_import/components/data_transformations.bdb7bf08.js">
 <link rel="modulepreload" href="./_node/unipept-visualizations@2.1.2/index.37540c86.js">
-<link rel="modulepreload" href="./_npm/d3@7.9.0/38e58290.js">
+<link rel="modulepreload" href="./_npm/d3@7.9.0/9a5b1801.js">
 <link rel="modulepreload" href="./_observablehq/stdlib/inputs.d397b6a8.js">
-<link rel="modulepreload" href="./_npm/@observablehq/plot@0.6.16/91a1490f.js">
+<link rel="modulepreload" href="./_npm/@observablehq/plot@0.6.16/b024f9a3.js">
 <link rel="modulepreload" href="./_npm/d3-dsv@3.0.1/407f7a1f.js">
 <link rel="modulepreload" href="./_npm/htl@0.3.1/063eb405.js">
 <link rel="modulepreload" href="./_npm/isoformat@0.2.1/c68fbd73.js">
 <link rel="modulepreload" href="./_npm/d3-array@3.2.4/e95f898e.js">
-<link rel="modulepreload" href="./_npm/d3-axis@3.0.0/d44feff9.js">
+<link rel="modulepreload" href="./_npm/d3-axis@3.0.0/bd0afa17.js">
 <link rel="modulepreload" href="./_npm/d3-brush@3.0.0/5830b12a.js">
 <link rel="modulepreload" href="./_npm/d3-chord@3.0.1/84d7b8e9.js">
 <link rel="modulepreload" href="./_npm/d3-color@3.1.0/2c0cdfa2.js">
@@ -34,7 +34,7 @@
 <link rel="modulepreload" href="./_npm/d3-drag@3.0.0/b22c5864.js">
 <link rel="modulepreload" href="./_npm/d3-ease@3.0.1/6f15f633.js">
 <link rel="modulepreload" href="./_npm/d3-fetch@3.0.1/ef1ec490.js">
-<link rel="modulepreload" href="./_npm/d3-force@3.0.0/5e1ff060.js">
+<link rel="modulepreload" href="./_npm/d3-force@3.0.0/60bb70b3.js">
 <link rel="modulepreload" href="./_npm/d3-format@3.1.0/5851d7ef.js">
 <link rel="modulepreload" href="./_npm/d3-geo@3.1.1/dcd02767.js">
 <link rel="modulepreload" href="./_npm/d3-hierarchy@3.1.2/f1db2593.js">
@@ -59,16 +59,16 @@
 <link rel="modulepreload" href="./_npm/robust-predicates@3.0.2/8ac9039b.js">
 <script type="module">
 
-import {define} from "./_observablehq/client.924c06c8.js";
+import {define} from "./_observablehq/client.0f6292e2.js";
 import {registerFile} from "./_observablehq/stdlib.95bfbf7e.js";
 
-registerFile("./data/segments.csv", {"name":"./data/segments.csv","mimeType":"text/csv","path":"./_file/data/segments.9ae01672.csv","lastModified":1735552861983,"size":1036654});
-registerFile("./data/videos.csv", {"name":"./data/videos.csv","mimeType":"text/csv","path":"./_file/data/videos.eaff3335.csv","lastModified":1735552861983,"size":132080});
+registerFile("./data/segments.csv", {"name":"./data/segments.csv","mimeType":"text/csv","path":"./_file/data/segments.9ae01672.csv","lastModified":1735556358801,"size":1036654});
+registerFile("./data/videos.csv", {"name":"./data/videos.csv","mimeType":"text/csv","path":"./_file/data/videos.eaff3335.csv","lastModified":1735556358801,"size":132080});
 
-define({id: "a9175010", outputs: ["cleanUpData","VideosAndSegments","GetSegmentTypeText","hierarchy","uv"], body: async () => {
-const [{cleanUpData, VideosAndSegments, GetSegmentTypeText, hierarchy}, {default: uv}] = await Promise.all([import("./_import/components/data_transformations.1b108a99.js"), import("./_node/unipept-visualizations@2.1.2/index.37540c86.js")]);
+define({id: "3c9e7410", outputs: ["createLeafFirstArray","cleanUpData","VideosAndSegments","GetSegmentTypeText","getChildTypes","hierarchy","uv"], body: async () => {
+const [{createLeafFirstArray, cleanUpData, VideosAndSegments, GetSegmentTypeText, getChildTypes, hierarchy}, {default: uv}] = await Promise.all([import("./_import/components/data_transformations.bdb7bf08.js"), import("./_node/unipept-visualizations@2.1.2/index.37540c86.js")]);
 
-return {cleanUpData,VideosAndSegments,GetSegmentTypeText,hierarchy,uv};
+return {createLeafFirstArray,cleanUpData,VideosAndSegments,GetSegmentTypeText,getChildTypes,hierarchy,uv};
 }});
 
 define({id: "573b5598", inputs: ["FileAttachment"], outputs: ["videosCsv","segmentsCsv"], body: async (FileAttachment) => {
@@ -157,14 +157,14 @@ const filteredVideos = videos
 return {filteredVideos};
 }});
 
-define({id: "5fd59526", inputs: ["filteredVideos","d3","segments"], outputs: ["filteredVideoIds","segmentsForFilteredVideos"], body: (filteredVideos,d3,segments) => {
+define({id: "7468e75d", inputs: ["filteredVideos","d3","segments"], outputs: ["filteredVideoIds","segmentsForFilteredVideos"], body: (filteredVideos,d3,segments) => {
 const filteredVideoIds = new Set(filteredVideos.map(v => v.video_id))
 const segmentsForFilteredVideos =
     d3.group(
         segments.filter(
             s => s.video_id && filteredVideoIds.has(s.video_id)
         ),
-        s => s.annotations_label
+        s => s.annotations_label //TODO should be segment_type_number
     )
 return {filteredVideoIds,segmentsForFilteredVideos};
 }});
@@ -305,30 +305,57 @@ createSlidingWindowPlot(videos, selectedGenres, selectedProductionCountries, "li
 return {createSlidingWindowPlot};
 }});
 
-define({id: "4d01b795", inputs: ["segmentTypes","segmentsForFilteredVideos"], outputs: ["segmentCounts","filteredVideEffects"], body: (segmentTypes,segmentsForFilteredVideos) => {
+define({id: "19c9f67b", inputs: ["segmentTypes","segmentsForFilteredVideos","createLeafFirstArray","getChildTypes"], outputs: ["segmentCounts","buildTree"], body: (segmentTypes,segmentsForFilteredVideos,createLeafFirstArray,getChildTypes) => {
 const segmentCounts = new Map(segmentTypes.values().map(type => [type, segmentsForFilteredVideos.get(type)?.length || 0]));
 
-// TODO represent the real hierarchy and not this simple view
-const filteredVideEffects = {
-    "id": 1,
-    "name": "Image Type",
-    "count": Array.from(segmentCounts.values()).reduce((a, b) => a + b, 0),
-    "selfCount": 0,
-    "children": Array.from(segmentTypes).map((type, index) => ({
-        "id": index + 2,
-        "name": type,
-        "count": segmentCounts.get(type),
-        "selfCount": segmentCounts.get(type),
-        "children": []
-    }))
-};
-return {segmentCounts,filteredVideEffects};
+function buildTree(hierarchy) {
+    let idCounter = 1;
+    const nodeMap = new Map(); // Map to store id-to-node mapping
+
+    const leafFirstArray = createLeafFirstArray(hierarchy);
+    function createNode(name, id, children = []) {
+        const countChildrenNodes = children.reduce((sum, child) => sum + child.count, 0);
+       return {
+            id,
+            name,
+            count:(segmentCounts.get(name) || 0)+countChildrenNodes,
+            selfCount: (segmentCounts.get(name) || 0),
+            children
+        };
+    }
+
+    function getAllChildNodes(childMap, nodeMap) {
+        const childNodes = [];
+        for (const key of childMap.keys()) {
+            const id = key;
+            if (nodeMap.has(id)) {
+                childNodes.push(nodeMap.get(id)); // Add node to result array
+            }
+        }
+        return childNodes;
+    }
+
+    for (const entry of leafFirstArray) {
+        const { id, name, parent } = entry;
+        const currentChildMap = getChildTypes(leafFirstArray, id);
+        const childNodes = getAllChildNodes(currentChildMap, nodeMap);
+        const newNode = createNode(name, id, childNodes);
+        nodeMap.set(id, newNode);
+    }
+    return nodeMap.get("1");
+}
+return {segmentCounts,buildTree};
 }});
 
-define({id: "e94edae2", inputs: ["uv","filteredVideEffects"], outputs: ["videoEffectsTree"], body: (uv,filteredVideEffects) => {
-const videoEffectsTree = document.getElementById("videoEffectsTree");
-new uv.Treeview(videoEffectsTree, filteredVideEffects);
-return {videoEffectsTree};
+define({id: "38f66f99", inputs: ["buildTree","hierarchy","uv"], outputs: ["filteredVideEffects","videoEffectsTree"], body: (buildTree,hierarchy,uv) => {
+    // Build the tree
+    const filteredVideEffects = buildTree(hierarchy);
+    //console.error("Created node tree:", filteredVideEffects);
+    // Render the tree in the DOM
+    const videoEffectsTree = document.getElementById("videoEffectsTree");
+    new uv.Treeview(videoEffectsTree, filteredVideEffects);
+
+return {filteredVideEffects,videoEffectsTree};
 }});
 
 </script>
@@ -353,7 +380,7 @@ return {videoEffectsTree};
 <script>{const e=document.querySelector("#observablehq-sidebar"),t=document.querySelector("#observablehq-sidebar-toggle"),r=sessionStorage.getItem("observablehq-sidebar");r?t.checked=r==="true":t.indeterminate=!0;for(const o of document.querySelectorAll("#observablehq-sidebar summary")){const s=o.parentElement;switch(sessionStorage.getItem(`observablehq-sidebar:${o.textContent}`)){case"true":s.open=!0;break;case"false":s.classList.contains("observablehq-section-active")||(s.open=!1);break}}addEventListener("beforeunload",()=>sessionStorage.setItem("observablehq-sidebar-scrolly",`${e.scrollTop}`));const a=sessionStorage.getItem("observablehq-sidebar-scrolly");a!=null&&(e.style.cssText="overflow: hidden;",e.scrollTop=+a,e.style.cssText="");}</script>
 <div id="observablehq-center">
 <main id="observablehq-main" class="observablehq">
-<div class="observablehq observablehq--block"><!--:a9175010:--></div>
+<div class="observablehq observablehq--block"><!--:3c9e7410:--></div>
 <script src="https://cdn.jsdelivr.net/npm/unipept-visualizations@latest/dist/unipept-visualizations.js"></script>
 <div class="observablehq observablehq--block"><!--:573b5598:--></div>
 <div class="observablehq observablehq--block"><!--:64e99ece:--></div>
@@ -362,7 +389,7 @@ return {videoEffectsTree};
 <h1 id="animation-trends" tabindex="-1"><a class="observablehq-header-anchor" href="#animation-trends">Animation Trends 🎥</a></h1>
 <div class="observablehq observablehq--block"><!--:a247846a:--></div>
 <div class="observablehq observablehq--block"><!--:49396511:--></div>
-<div class="observablehq observablehq--block"><!--:5fd59526:--></div>
+<div class="observablehq observablehq--block"><!--:7468e75d:--></div>
 <div class="observablehq observablehq--block"><!--:61d7f350:--></div>
   <style>
     body {
@@ -387,12 +414,12 @@ return {videoEffectsTree};
     <div id="additional-plot-container"></div>
   </div>
 <div id="videoEffectsTree"></div>
-<div class="observablehq observablehq--block"><!--:4d01b795:--></div>
-<div class="observablehq observablehq--block"><!--:e94edae2:--></div>
+<div class="observablehq observablehq--block"><!--:19c9f67b:--></div>
+<div class="observablehq observablehq--block"><!--:38f66f99:--></div>
 </main>
 <footer id="observablehq-footer">
 <nav><a rel="prev" href="./Segments"><span>Segments Test</span></a><a rel="next" href="./bubbe_chart"><span>Timeline with Bubble Chart Demo</span></a></nav>
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-12-30T10:01:12">Dec 30, 2024</a>.</div>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-12-30T10:59:28">Dec 30, 2024</a>.</div>
 </footer>
 </div>
 </body>
