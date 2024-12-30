@@ -5,7 +5,7 @@ toc: false
 ---
 
 ```js
-import { cleanUpData, VideosAndSegments, GetSegmentTypeText, hierarchy } from "./components/data_transformations.js"
+import { createLeafFirstArray, cleanUpData, VideosAndSegments, GetSegmentTypeText, getChildTypes, hierarchy } from "./components/data_transformations.js"
 import uv from "unipept-visualizations";
 ```
 <script src="https://cdn.jsdelivr.net/npm/unipept-visualizations@latest/dist/unipept-visualizations.js"></script>
@@ -99,7 +99,7 @@ const segmentsForFilteredVideos =
         segments.filter(
             s => s.video_id && filteredVideoIds.has(s.video_id)
         ),
-        s => s.annotations_label
+        s => s.annotations_label //TODO should be segment_type_number
     )
 ```
 
@@ -297,24 +297,52 @@ createSlidingWindowPlot(videos, selectedGenres, selectedProductionCountries, "li
 ```js
 const segmentCounts = new Map(segmentTypes.values().map(type => [type, segmentsForFilteredVideos.get(type)?.length || 0]));
 
-// TODO represent the real hierarchy and not this simple view
-const filteredVideEffects = {
-    "id": 1,
-    "name": "Image Type",
-    "count": Array.from(segmentCounts.values()).reduce((a, b) => a + b, 0),
-    "selfCount": 0,
-    "children": Array.from(segmentTypes).map((type, index) => ({
-        "id": index + 2,
-        "name": type,
-        "count": segmentCounts.get(type),
-        "selfCount": segmentCounts.get(type),
-        "children": []
-    }))
-};
+function buildTree(hierarchy) {
+    let idCounter = 1;
+    const nodeMap = new Map(); // Map to store id-to-node mapping
+
+    const leafFirstArray = createLeafFirstArray(hierarchy);
+    function createNode(name, id, children = []) {
+        const countChildrenNodes = children.reduce((sum, child) => sum + child.count, 0);
+       return {
+            id,
+            name,
+            count:(segmentCounts.get(name) || 0)+countChildrenNodes,
+            selfCount: (segmentCounts.get(name) || 0),
+            children
+        };
+    }
+
+    function getAllChildNodes(childMap, nodeMap) {
+        const childNodes = [];
+        for (const key of childMap.keys()) {
+            const id = key;
+            if (nodeMap.has(id)) {
+                childNodes.push(nodeMap.get(id)); // Add node to result array
+            }
+        }
+        return childNodes;
+    }
+
+    for (const entry of leafFirstArray) {
+        const { id, name, parent } = entry;
+        const currentChildMap = getChildTypes(leafFirstArray, id);
+        const childNodes = getAllChildNodes(currentChildMap, nodeMap);
+        const newNode = createNode(name, id, childNodes);
+        nodeMap.set(id, newNode);
+    }
+    return nodeMap.get("1");
+}
 ```
 
 ```js
-const videoEffectsTree = document.getElementById("videoEffectsTree");
-new uv.Treeview(videoEffectsTree, filteredVideEffects);
+
+    // Build the tree
+    const filteredVideEffects = buildTree(hierarchy);
+    //console.error("Created node tree:", filteredVideEffects);
+    // Render the tree in the DOM
+    const videoEffectsTree = document.getElementById("videoEffectsTree");
+    new uv.Treeview(videoEffectsTree, filteredVideEffects);
+
 ```
 

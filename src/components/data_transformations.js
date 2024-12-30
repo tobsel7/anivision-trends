@@ -96,24 +96,6 @@ export function getYear(obj) {
 
 // Define the segment type hierarchy as an object
 export const hierarchy = {
-    "Image Type": {
-        "1.1": "Animation",
-        "1.2": "Hybrid Image",
-        "1.3": "Live-Action",
-        "1.4": "Still Image",
-        "1.5": "Irrelevant",
-        "1.6": "Uncertain"
-    },
-    "Animation": {
-        "1.1.1": "Drawn Animation",
-        "1.1.2": "Modified Base",
-        "1.1.3": "Direct/Cameraless",
-        "1.1.4": "Computer Animation",
-        "1.1.5": "Miscellaneous Animation",
-        "1.1.6": "Cutout",
-        "1.1.7": "Stop-Motion",
-        "1.1.8": "Time Manipulation"
-    },
     "Drawn Animation": {
         "1.1.1.1": "Limited Cel",
         "1.1.1.2": "Full Cel",
@@ -163,6 +145,16 @@ export const hierarchy = {
         "1.1.8.4": "Bullet Time",
         "1.1.8.5": "Uncertain"
     },
+    "Animation": {
+        "1.1.1": "Drawn Animation",
+        "1.1.2": "Modified Base",
+        "1.1.3": "Direct/Cameraless",
+        "1.1.4": "Computer Animation",
+        "1.1.5": "Miscellaneous Animation",
+        "1.1.6": "Cutout",
+        "1.1.7": "Stop-Motion",
+        "1.1.8": "Time Manipulation"
+    },
     "Still Image": {
         "1.4.1": "Photographic",
         "1.4.2": "Graphic",
@@ -170,6 +162,15 @@ export const hierarchy = {
         "1.4.4": "Hybrid",
         "1.4.5": "Uncertain"
     },
+    "Image Type": {
+        "1.1": "Animation",
+        "1.2": "Hybrid Image",
+        "1.3": "Live-Action",
+        "1.4": "Still Image",
+        "1.5": "Irrelevant",
+        "1.6": "Uncertain"
+    },
+    
     "Transition": {
         "3.1": "Fade In",
         "3.2": "Dissolve",
@@ -177,15 +178,53 @@ export const hierarchy = {
         "3.4": "Fade Out",
         "3.5": "Animated Transition"
     },
+    
     "Miscellaneous Attribut": {
         "2.1": "Rotoscoped",
         "2.2": "scientific/technical image",
         "2.3": "dissolve animation"
+    },
+    "Root": {
+        "1": "Image Type",
+        "2": "Miscellaneous Attribut",
+        "3": "Transition"
     }
 };
 
-//
+//Get direct children types of certain parentId
+export function getChildTypes(leafFirstArray, parentId) {
+    const result = new Map();
+    for (const entry of leafFirstArray) {
+        const { id, name, parent } = entry;
+        const parentIdFromCurrent = id.slice(0, -2);
 
+        if (parentIdFromCurrent === parentId) {
+                result.set(id, name);
+        }
+    }
+    return result;
+}
+
+//returns the hierarchy as an array with the leafes first, so it can be used to create nodes 
+export function createLeafFirstArray(hierarchy) {
+    const result = [];
+
+    function traverse(obj, parent = null) {
+        for (const [key, value] of Object.entries(obj)) {
+            if (typeof value === 'string') {
+                // Leaf node
+                result.push({ id: key, name: value, parent });
+            } else {
+                // Recursive traversal
+                traverse(value, key);
+                //result.push({ id: key, name: key, parent }); // Add parent after children
+            }
+        }
+    }
+
+    traverse(hierarchy);
+    return result;
+}
 
 // Search function to find the number by tier and annotation label
 export function GetSegmentTypeNumber(tier, annotation) {
