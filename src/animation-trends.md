@@ -233,8 +233,6 @@ function createSlidingWindowPlot(videos, getSelectedGenres, getSelectedProductio
   return updatePlots; // Return a function to trigger updates dynamically
 }
 
-
-
 // Pass the dynamic function for genre selection
 createSlidingWindowPlot(videos, selectedGenres, selectedProductionCountries, "line-chart-container", "brush-chart");
 
