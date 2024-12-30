@@ -12,7 +12,7 @@ AniVision Trends is built using the [Observable Framework](https://observablehq.
 ## Deployed Version
 
 The rendered version of this project is available under
-[GitHub Pages Anivision-Trends]([https://observablehq.com/framework/](https://tobsel7.github.io/anivision-trends/)).
+[GitHub Pages Anivision-Trends](https://tobsel7.github.io/anivision-trends/).
 
 ## Installation
 
