@@ -181,7 +181,6 @@ function createSlidingWindowPlot(videos, getSelectedGenres, getSelectedProductio
         const [x0, x1] = selection.map(xBrushScale.invert);
         filteredData = videoCounts.filter((d) => d.year >= x0 && d.year <= x1); // Filter main chart data
         renderPlot(filteredData); // Update the main plot
-        renderAdditionalBarPlot(filteredData); // Update bar plot
       }
     });
 
@@ -227,43 +226,11 @@ function createSlidingWindowPlot(videos, getSelectedGenres, getSelectedProductio
       videoCounts = computeVideoCounts(filteredVideos); // Recompute video counts
       filteredData = [...videoCounts]; // Reset filtered data
       renderPlot(filteredData); // Update the main plot
-      renderAdditionalBarPlot(filteredData); // Update the additional bar plot
       renderBrush(); // Refresh the brush with unfiltered data
     }
   };
 
   return updatePlots; // Return a function to trigger updates dynamically
-}
-
-
-
-
-// Function for the additional bar plot
-function renderAdditionalBarPlot(filteredData) {
-  const barPlot = Plot.plot({
-    height: 300,
-    width: 800,
-    x: {
-      label: "Year",
-      tickFormat: (d, i, values) => {
-        const interval = Math.ceil(values.length / 10); // Show approximately 10 ticks
-        return i % interval === 0 ? d.toString() : ""; 
-      },
-      grid: true,
-    },
-    y: { label: "Count", grid: true },
-    marks: [
-      Plot.barY(filteredData, { x: "year", y: "count", fill: "#D55E00" }), // Orange bars
-    ],
-    style: {
-      background: "#121212", // Black background
-      color: "#fff", // White text
-    },
-  });
-
-  const additionalContainer = document.getElementById("additional-plot-container");
-  additionalContainer.innerHTML = ""; // Clear previous plot
-  additionalContainer.appendChild(barPlot);
 }
 
 // Pass the dynamic function for genre selection
