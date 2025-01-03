@@ -194,8 +194,9 @@ updateTreeView(segmentCounts)
 ```
 
 ```js
-
-    function updateBubbleChart(filteredVideos)
+function updateBubbleChart(filteredVideos)
+{
+    function drawChart(filteredVideos)
     {
         const organizationsData = generateOrganizationsData(filteredVideos);
 
@@ -229,10 +230,10 @@ updateTreeView(segmentCounts)
           const root = pack(d3.hierarchy({children: organizationsData})
               .sum(d => d.count));
 
-        const svg = d3.select("#bubblechart")
-          .append("svg")
+        const svg = d3.create("svg")
           .attr("width", width)
           .attr("height", height);
+
 
           // Place each (leaf) node according to the layout’s x and y values.
           const node = svg.append("g")
@@ -266,15 +267,15 @@ updateTreeView(segmentCounts)
                 .attr("y", (text, i) => i * 15 - 10) // Adjust vertical positioning for each line
                 .attr("text-anchor", "middle") // Center text
                 .attr("fill", "black") // Text color
-                //.style("font-size", d => `${Math.min(d.r / 100.0, 3)}px`); // Dynamic font size
-                .style("font-size", function (text, i, nodes) {
+                .style("font-size", d => `${Math.min(d.r, 5)}px`); // Dynamic font size
+                /**.style("font-size", function (text, i, nodes) {
           
-                    const fontSize = Math.min((d3.select(nodes[i].parentNode).datum().r/500), 1);
+                    const fontSize = Math.min((d3.select(nodes[i].parentNode).datum().r/2), 1);
             
                     console.log(`Calculated Font Size: ${fontSize}px`);
             
-                    return `${Math.max(fontSize, 12)}px`; // Constrain font size to a minimum of 10px
-                });
+                    return `${Math.max(fontSize, 7)}px`; // Constrain font size to a minimum of 10px
+                });*/
 
           // Add a label.
           const text = node.append("text")
@@ -285,13 +286,15 @@ updateTreeView(segmentCounts)
           return Object.assign(svg.node(), {scales: {color}});
         
     }
-    const bubbleChart= updateBubbleChart(filteredVideos);
+    const bubbleChart= drawChart(filteredVideos);
     const bubbleChartContainer = document.getElementById("bubblechart-container");
     if (bubbleChartContainer.firstChild) {
         bubbleChartContainer.replaceChild(bubbleChart, bubbleChartContainer.firstChild);
     } else {
         bubbleChartContainer.appendChild(bubbleChart);
     }
+}
+    updateBubbleChart(filteredVideos)
 ```
 ```js
 function updateVideoTable(filteredVideos) {
@@ -350,6 +353,7 @@ const brush = d3.brushX()
             const newSegmentCounts = new Map(segmentTypes.values().map(type => [type, filteredSegments.filter(s => s.annotations_label === type).length]));
 
             updateTreeView(newSegmentCounts);
+            updateBubbleChart(filteredVideos.filter(v => filteredVideoIds.has(v.video_id)));
             updateVideoTable(filteredVideos.filter(v => filteredVideoIds.has(v.video_id)));
         }
     });
