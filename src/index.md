@@ -5,7 +5,7 @@ toc: false
 ---
 
 ```js
-import { createLeafFirstArray, cleanUpData, VideosAndSegments, GetSegmentTypeText, getChildTypes, hierarchy } from "./components/data_transformations.js"
+import { createLeafFirstArray, cleanUpData, VideosAndSegments, GetSegmentTypeText, getChildTypes,splitAndLineBreak, generateOrganizationsData, hierarchy } from "./components/data_transformations.js"
 import uv from "unipept-visualizations";
 ```
 <script src="https://cdn.jsdelivr.net/npm/unipept-visualizations@latest/dist/unipept-visualizations.js"></script>
@@ -194,6 +194,109 @@ updateTreeView(segmentCounts)
 ```
 
 ```js
+function updateBubbleChart(filteredVideos)
+{
+    function drawChart(filteredVideos)
+    {
+        const organizationsData = generateOrganizationsData(filteredVideos);
+
+          // Specify the dimensions of the chart.
+          const width = 800;
+          const height = 800;
+          const marginStroke = 1; // to avoid clipping the root circle stroke
+          const name = d => d.organization; // "Strings" of "flare.util.Strings"
+          const group = d => d.production_country; // "util" of "flare.util.Strings"
+          //const names = d => name(d).split(/(?=[A-Z][a-z])|\s+/g); // ["Legend", "Item"] of "flare.vis.legend.LegendItems"
+
+
+          // Specify the number format for values.
+          const format = d3.format(",d");
+
+          // Create a categorical color scale.
+          //const color = d3.scaleOrdinal(d3.schemeTableau10);
+          // Define a custom categorical color scale for our three countries
+          const color = d3.scaleOrdinal()
+            .domain([1, 2, 3]) // The domain represents the input values
+            .range(["#aec6cf", "#b2d8b2", "#f4c2c2"]); // Pastel blue, pastel green, pastel red
+            //.range(["blue", "green", "red"]); // The range represents the corresponding colors
+
+          // Create the pack layout.
+          const pack = d3.pack()
+              .size([width - marginStroke * 2, height - marginStroke * 2])
+              .padding(3);
+
+          // Compute the hierarchy from the (flat) data; expose the values
+          // for each node; lastly apply the pack layout.
+          const root = pack(d3.hierarchy({children: organizationsData})
+              .sum(d => d.count));
+
+        const svg = d3.create("svg")
+          .attr("width", width)
+          .attr("height", height);
+
+
+          // Place each (leaf) node according to the layout’s x and y values.
+          const node = svg.append("g")
+            .selectAll()
+            .data(root.leaves())
+            .join("g")
+              .attr("transform", d => `translate(${d.x},${d.y})`);
+
+          // Add a title.
+          //node.append("title")
+              //.text(d => `${d.data.organization}\n${format(d.count)}`);
+
+
+  
+          // Add a filled circle.
+          node.append("circle")
+              .attr("fill-opacity", 0.7)
+              .attr("fill", d => color(group(d.data)))
+              .attr("r", d => d.r);
+
+          // Add a title inside the circle with line breaks
+          node.append("text")
+            .selectAll("tspan")
+            .data(d => {
+                const organizationLines = splitAndLineBreak(d.data.organization); // Apply line-breaking logic
+                return [...organizationLines]; // Combine organization lines with the count
+            })
+            .join("tspan")
+                .text((text, i) => text) // Add each line
+                .attr("x", 0) // Center text horizontally
+                .attr("y", (text, i) => i * 15 - 10) // Adjust vertical positioning for each line
+                .attr("text-anchor", "middle") // Center text
+                .attr("fill", "black") // Text color
+                .style("font-size", d => `${Math.min(d.r, 5)}px`); // Dynamic font size
+                /**.style("font-size", function (text, i, nodes) {
+          
+                    const fontSize = Math.min((d3.select(nodes[i].parentNode).datum().r/2), 1);
+            
+                    console.log(`Calculated Font Size: ${fontSize}px`);
+            
+                    return `${Math.max(fontSize, 7)}px`; // Constrain font size to a minimum of 10px
+                });*/
+
+          // Add a label.
+          const text = node.append("text")
+              .attr("clip-path", d => `circle(${d.r})`);
+
+ 
+
+          return Object.assign(svg.node(), {scales: {color}});
+        
+    }
+    const bubbleChart= drawChart(filteredVideos);
+    const bubbleChartContainer = document.getElementById("bubblechart-container");
+    if (bubbleChartContainer.firstChild) {
+        bubbleChartContainer.replaceChild(bubbleChart, bubbleChartContainer.firstChild);
+    } else {
+        bubbleChartContainer.appendChild(bubbleChart);
+    }
+}
+    updateBubbleChart(filteredVideos)
+```
+```js
 function updateVideoTable(filteredVideos) {
     const table = Inputs.table(filteredVideos.map(v => {
         return {
@@ -250,6 +353,7 @@ const brush = d3.brushX()
             const newSegmentCounts = new Map(segmentTypes.values().map(type => [type, filteredSegments.filter(s => s.annotations_label === type).length]));
 
             updateTreeView(newSegmentCounts);
+            updateBubbleChart(filteredVideos.filter(v => filteredVideoIds.has(v.video_id)));
             updateVideoTable(filteredVideos.filter(v => filteredVideoIds.has(v.video_id)));
         }
     });
@@ -277,6 +381,10 @@ if (brushChartContainer.firstChild) {
   <h2>Used Video Effects</h2>
   <div id="videoEffectsTreeContainer">
     <div id="videoEffectsTree"></div>
+  </div>
+  <h2>Creating Organizations</h2>
+  <div id="bubblechart-container">
+    <svg id="bubblechart"></svg>
   </div>
   <h2>Found Videos</h2>
   <div id="filteredVideosTableContainer">
