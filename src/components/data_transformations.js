@@ -80,6 +80,37 @@ export function splitToArray(value) {
     return typeof value === "string" ? value.split(",").map(s => s.trim()) : value;
 }
 
+//function to slit and line break strings e.g. Organization names for better visualization
+export function splitAndLineBreak(orgString) {
+    const minChars = 5; // Minimum characters before considering a split
+    const maxChars = 15; // Maximum characters before forcing a split
+    let result = [];
+    let currentLine = "";
+
+    orgString.split(" ").forEach(word => {
+        // Check if adding the word exceeds the maximum character limit
+        if (currentLine.length + word.length + 1 > maxChars) { // +1 accounts for the space
+            if (currentLine.length >= minChars) {
+                // Push the current line to the result if it meets minChars
+                result.push(currentLine.trim());
+                currentLine = word + " "; // Start a new line
+            } else {
+                // Force split if the current line is too short
+                currentLine += word + " ";
+            }
+        } else {
+            // Add the word to the current line
+            currentLine += word + " ";
+        }
+    });
+
+    // Push the last line if it's not empty
+    if (currentLine.trim()) {
+        result.push(currentLine.trim());
+    }
+
+    return result; // Return as an array of lines
+}
 
 
 //gets the year from a video object
