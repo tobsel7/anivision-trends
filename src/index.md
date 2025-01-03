@@ -5,7 +5,7 @@ toc: false
 ---
 
 ```js
-import { createLeafFirstArray, cleanUpData, VideosAndSegments, GetSegmentTypeText, getChildTypes,splitAndLineBreak, hierarchy } from "./components/data_transformations.js"
+import { createLeafFirstArray, cleanUpData, VideosAndSegments, GetSegmentTypeText, getChildTypes,splitAndLineBreak, generateOrganizationsData, hierarchy } from "./components/data_transformations.js"
 import uv from "unipept-visualizations";
 ```
 <script src="https://cdn.jsdelivr.net/npm/unipept-visualizations@latest/dist/unipept-visualizations.js"></script>
@@ -195,22 +195,13 @@ updateTreeView(segmentCounts)
 
 ```js
 
-   const organizationsData = [
-      { organization: "Johannes Gutenberg-Universität Mainz", count: 1, production_country: 1},
-      { organization: "Henkel", count: 1, production_country: 1 },
-      { organization: "Institut für Geophysikalische Wissenschaften", count: 4, production_country: 1 },
-      { organization: "Fernsehen der DDR", count: 1, production_country: 3 },
-      { organization: "Institut für den wissenschaftlichen Film (IWF)", count: 2, production_country: 2 },
-      { organization: "VE Kombinat Braunkohlekraftwerke", count: 2, production_country: 3 }
-    ];
-
-    function updateBubbleChart()
+    function updateBubbleChart(filteredVideos)
     {
+        const organizationsData = generateOrganizationsData(filteredVideos);
 
           // Specify the dimensions of the chart.
-
           const width = 800;
-          const height = 400;
+          const height = 800;
           const marginStroke = 1; // to avoid clipping the root circle stroke
           const name = d => d.organization; // "Strings" of "flare.util.Strings"
           const group = d => d.production_country; // "util" of "flare.util.Strings"
@@ -278,7 +269,7 @@ updateTreeView(segmentCounts)
                 //.style("font-size", d => `${Math.min(d.r / 100.0, 3)}px`); // Dynamic font size
                 .style("font-size", function (text, i, nodes) {
           
-                    const fontSize = Math.min((d3.select(nodes[i].parentNode).datum().r/5), 9);
+                    const fontSize = Math.min((d3.select(nodes[i].parentNode).datum().r/500), 1);
             
                     console.log(`Calculated Font Size: ${fontSize}px`);
             
@@ -294,7 +285,7 @@ updateTreeView(segmentCounts)
           return Object.assign(svg.node(), {scales: {color}});
         
     }
-    const bubbleChart= updateBubbleChart();
+    const bubbleChart= updateBubbleChart(filteredVideos);
     const bubbleChartContainer = document.getElementById("bubblechart-container");
     if (bubbleChartContainer.firstChild) {
         bubbleChartContainer.replaceChild(bubbleChart, bubbleChartContainer.firstChild);
