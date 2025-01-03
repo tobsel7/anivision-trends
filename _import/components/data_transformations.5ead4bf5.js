@@ -80,6 +80,37 @@ export function splitToArray(value) {
     return typeof value === "string" ? value.split(",").map(s => s.trim()) : value;
 }
 
+//function to slit and line break strings e.g. Organization names for better visualization
+export function splitAndLineBreak(orgString) {
+    const minChars = 5; // Minimum characters before considering a split
+    const maxChars = 15; // Maximum characters before forcing a split
+    let result = [];
+    let currentLine = "";
+
+    orgString.split(" ").forEach(word => {
+        // Check if adding the word exceeds the maximum character limit
+        if (currentLine.length + word.length + 1 > maxChars) { // +1 accounts for the space
+            if (currentLine.length >= minChars) {
+                // Push the current line to the result if it meets minChars
+                result.push(currentLine.trim());
+                currentLine = word + " "; // Start a new line
+            } else {
+                // Force split if the current line is too short
+                currentLine += word + " ";
+            }
+        } else {
+            // Add the word to the current line
+            currentLine += word + " ";
+        }
+    });
+
+    // Push the last line if it's not empty
+    if (currentLine.trim()) {
+        result.push(currentLine.trim());
+    }
+
+    return result; // Return as an array of lines
+}
 
 
 //gets the year from a video object
@@ -94,6 +125,36 @@ export function getYear(obj) {
     }
 }
 
+//generates Organizations array for bubble chart
+export function generateOrganizationsData(filteredVideos) {
+    // Create a map to count organizations and their production_country
+    const organizationMap = new Map();
+
+    filteredVideos.forEach(video => {
+        const productionCountry = parseInt(video.production_country, 10); // Parse production country as an integer
+
+        video.organizations.forEach(org => {
+            const organization = org.replace(/"/g, "").trim(); // Remove quotes and trim whitespace
+
+            // If the organization is already in the map, update its count
+            if (organizationMap.has(organization)) {
+                const entry = organizationMap.get(organization);
+                entry.count += 1;
+                entry.production_country = productionCountry; // Update production_country (in case it varies)
+            } else {
+                // Otherwise, add a new entry
+                organizationMap.set(organization, {
+                    organization: organization,
+                    count: 1,
+                    production_country: productionCountry
+                });
+            }
+        });
+    });
+
+    // Convert the map values to an array
+    return Array.from(organizationMap.values());
+}
 // Define the segment type hierarchy as an object
 export const hierarchy = {
     "Drawn Animation": {
