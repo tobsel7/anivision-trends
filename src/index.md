@@ -68,22 +68,30 @@ const segmentTypes = new Set([
 # Animation Trends 🎥
 
 ```js
-const selectedGenres = view(Inputs.select(
+// Create the dropdown element
+const genresDropdown = Inputs.select(
     genres,
     {
         multiple: true,
         label: "Selected Genres",
         value: genres
     }
-))
-const selectedProductionCountries = view(Inputs.select(
+);
+const selectedGenres = view(genresDropdown);
+// Move the dropdown into a specific container
+document.getElementById("filtersContainer").appendChild(genresDropdown);
+
+
+const productionCountryDropdown=Inputs.select(
     productionCountries,
     {
         multiple: true,
         label: "Selected Production Countries",
         value: productionCountries.values()
     }
-))
+);
+const selectedProductionCountries = view(productionCountryDropdown);
+document.getElementById("filtersContainer").appendChild(productionCountryDropdown);
 ```
 
 ```js
@@ -372,20 +380,31 @@ if (brushChartContainer.firstChild) {
 ```
 
 <body>
+  <!-- Filters Container -->
+  <div id="filtersContainer">
+    <h3>Filters</h3>
+    <div id="genresDropdown"></div>
+    <div id="countriesDropdown"></div>
+  </div>
+
+  <!-- Chart Container -->
   <div class="chart-container">
     <h1>Videos over the Years</h1>
     <div id="line-chart-container"></div>
     <svg id="brush-chart" width="800" height="100"></svg>
     <div id="additional-plot-container"></div>
   </div>
+
   <h2>Used Video Effects</h2>
   <div id="videoEffectsTreeContainer">
     <div id="videoEffectsTree"></div>
   </div>
+
   <h2>Creating Organizations</h2>
   <div id="bubblechart-container">
     <svg id="bubblechart"></svg>
   </div>
+
   <h2>Found Videos</h2>
   <div id="filteredVideosTableContainer">
     <div id="filteredVideosTable"></div>
