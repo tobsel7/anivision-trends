@@ -227,8 +227,10 @@ function updateBubbleChart(filteredVideos)
           // Define a custom categorical color scale for our three countries
           const color = d3.scaleOrdinal()
             .domain([1, 2, 3]) // The domain represents the input values
-            .range(["#aec6cf", "#b2d8b2", "#f4c2c2"]); // Pastel blue, pastel green, pastel red
-            //.range(["blue", "green", "red"]); // The range represents the corresponding colors
+            .range(["#6495ED", "#66C2A5", "#FC8D62"]); 
+            //Blue (#6495ED): Cornflower Blue - Clear and distinguishable.
+            //Green (#66C2A5): Aqua Green - Friendly to deuteranopia and protanopia.
+            //Red/Orange (#FC8D62): Light Orange-Red - Distinct from green and blue.
 
           // Create the pack layout.
           const pack = d3.pack()
