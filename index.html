@@ -62,8 +62,8 @@
 import {define} from "./_observablehq/client.7f5f7582.js";
 import {registerFile} from "./_observablehq/stdlib.95bfbf7e.js";
 
-registerFile("./data/segments.csv", {"name":"./data/segments.csv","mimeType":"text/csv","path":"./_file/data/segments.9ae01672.csv","lastModified":1736103274096,"size":1036654});
-registerFile("./data/videos.csv", {"name":"./data/videos.csv","mimeType":"text/csv","path":"./_file/data/videos.eaff3335.csv","lastModified":1736103274100,"size":132080});
+registerFile("./data/segments.csv", {"name":"./data/segments.csv","mimeType":"text/csv","path":"./_file/data/segments.9ae01672.csv","lastModified":1736103598304,"size":1036654});
+registerFile("./data/videos.csv", {"name":"./data/videos.csv","mimeType":"text/csv","path":"./_file/data/videos.eaff3335.csv","lastModified":1736103598308,"size":132080});
 
 define({id: "6a5dce3b", outputs: ["createLeafFirstArray","cleanUpData","VideosAndSegments","GetSegmentTypeText","getChildTypes","splitAndLineBreak","generateOrganizationsData","hierarchy","uv"], body: async () => {
 const [{createLeafFirstArray, cleanUpData, VideosAndSegments, GetSegmentTypeText, getChildTypes, splitAndLineBreak, generateOrganizationsData, hierarchy}, {default: uv}] = await Promise.all([import("./_import/components/data_transformations.5ead4bf5.js"), import("./_node/unipept-visualizations@2.1.2/index.37540c86.js")]);
@@ -583,6 +583,15 @@ body {
   margin-right: 10px; /* Space between bar chart and filters */
 }
 
+#line-chart-container {
+  margin-bottom: 20px; /* Add space below the line chart */
+}
+
+#brush-chart {
+  margin-top: 10px; /* Add space above the bar chart (brush chart) */
+}
+
+
 #filtersColumn {
   flex: 1; /* Smaller space for the filters column */
   margin-left: 10px; /* Space on the left side of filters */
@@ -673,7 +682,7 @@ body {
 </main>
 <footer id="observablehq-footer">
 <nav><a rel="next" href="./Segments"><span>Segments Test</span></a></nav>
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2025-01-05T18:54:44">Jan 5, 2025</a>.</div>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2025-01-05T19:00:08">Jan 5, 2025</a>.</div>
 </footer>
 </div>
 </body>
