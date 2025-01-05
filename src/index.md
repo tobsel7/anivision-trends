@@ -478,6 +478,15 @@ body {
   margin-right: 10px; /* Space between bar chart and filters */
 }
 
+#line-chart-container {
+  margin-bottom: 20px; /* Add space below the line chart */
+}
+
+#brush-chart {
+  margin-top: 10px; /* Add space above the bar chart (brush chart) */
+}
+
+
 #filtersColumn {
   flex: 1; /* Smaller space for the filters column */
   margin-left: 10px; /* Space on the left side of filters */
