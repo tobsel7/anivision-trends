@@ -12,14 +12,14 @@
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
 <link rel="stylesheet" type="text/css" href="./_observablehq/theme-air,near-midnight,alt,wide.db1cdf55.css">
 <link rel="stylesheet" type="text/css" href="./_observablehq/stdlib/inputs.ea9fd553.css">
-<link rel="modulepreload" href="./_observablehq/client.12c32b39.js">
+<link rel="modulepreload" href="./_observablehq/client.d66b2894.js">
 <link rel="modulepreload" href="./_observablehq/runtime.9393ab6d.js">
 <link rel="modulepreload" href="./_observablehq/stdlib.95bfbf7e.js">
 <link rel="modulepreload" href="./_import/components/data_transformations.5ead4bf5.js">
 <link rel="modulepreload" href="./_node/unipept-visualizations@2.1.2/index.37540c86.js">
-<link rel="modulepreload" href="./_npm/d3@7.9.0/5eab23c6.js">
+<link rel="modulepreload" href="./_npm/d3@7.9.0/b98ba9a5.js">
 <link rel="modulepreload" href="./_observablehq/stdlib/inputs.d397b6a8.js">
-<link rel="modulepreload" href="./_npm/@observablehq/plot@0.6.16/b46f1bd2.js">
+<link rel="modulepreload" href="./_npm/@observablehq/plot@0.6.16/4cda9977.js">
 <link rel="modulepreload" href="./_npm/d3-dsv@3.0.1/407f7a1f.js">
 <link rel="modulepreload" href="./_npm/htl@0.3.1/063eb405.js">
 <link rel="modulepreload" href="./_npm/isoformat@0.2.1/c68fbd73.js">
@@ -35,7 +35,7 @@
 <link rel="modulepreload" href="./_npm/d3-ease@3.0.1/6f15f633.js">
 <link rel="modulepreload" href="./_npm/d3-fetch@3.0.1/35880c2a.js">
 <link rel="modulepreload" href="./_npm/d3-force@3.0.0/60bb70b3.js">
-<link rel="modulepreload" href="./_npm/d3-format@3.1.0/5851d7ef.js">
+<link rel="modulepreload" href="./_npm/d3-format@3.1.0/33fb7288.js">
 <link rel="modulepreload" href="./_npm/d3-geo@3.1.1/5e427f4b.js">
 <link rel="modulepreload" href="./_npm/d3-hierarchy@3.1.2/f1db2593.js">
 <link rel="modulepreload" href="./_npm/d3-interpolate@3.0.1/034b7bcb.js">
@@ -43,10 +43,10 @@
 <link rel="modulepreload" href="./_npm/d3-polygon@3.0.1/bbafde58.js">
 <link rel="modulepreload" href="./_npm/d3-quadtree@3.0.1/aa5b35a8.js">
 <link rel="modulepreload" href="./_npm/d3-random@3.0.1/32c7fec2.js">
-<link rel="modulepreload" href="./_npm/d3-scale@4.0.2/2d9e63f3.js">
+<link rel="modulepreload" href="./_npm/d3-scale@4.0.2/4143aac9.js">
 <link rel="modulepreload" href="./_npm/d3-scale-chromatic@3.1.0/cf9b720b.js">
 <link rel="modulepreload" href="./_npm/d3-selection@3.0.0/a4e530fb.js">
-<link rel="modulepreload" href="./_npm/d3-shape@3.2.0/be692bd9.js">
+<link rel="modulepreload" href="./_npm/d3-shape@3.2.0/f8e03c56.js">
 <link rel="modulepreload" href="./_npm/d3-time@3.1.0/3a9ac1c1.js">
 <link rel="modulepreload" href="./_npm/d3-time-format@4.1.0/28d1ef76.js">
 <link rel="modulepreload" href="./_npm/d3-timer@3.0.1/f31b5398.js">
@@ -59,11 +59,11 @@
 <link rel="modulepreload" href="./_npm/robust-predicates@3.0.2/8ac9039b.js">
 <script type="module">
 
-import {define} from "./_observablehq/client.12c32b39.js";
+import {define} from "./_observablehq/client.d66b2894.js";
 import {registerFile} from "./_observablehq/stdlib.95bfbf7e.js";
 
-registerFile("./data/segments.csv", {"name":"./data/segments.csv","mimeType":"text/csv","path":"./_file/data/segments.9ae01672.csv","lastModified":1736103987560,"size":1036654});
-registerFile("./data/videos.csv", {"name":"./data/videos.csv","mimeType":"text/csv","path":"./_file/data/videos.eaff3335.csv","lastModified":1736103987560,"size":132080});
+registerFile("./data/segments.csv", {"name":"./data/segments.csv","mimeType":"text/csv","path":"./_file/data/segments.9ae01672.csv","lastModified":1736107826869,"size":1036654});
+registerFile("./data/videos.csv", {"name":"./data/videos.csv","mimeType":"text/csv","path":"./_file/data/videos.eaff3335.csv","lastModified":1736107826873,"size":132080});
 
 define({id: "6a5dce3b", outputs: ["createLeafFirstArray","cleanUpData","VideosAndSegments","GetSegmentTypeText","getChildTypes","splitAndLineBreak","generateOrganizationsData","hierarchy","uv"], body: async () => {
 const [{createLeafFirstArray, cleanUpData, VideosAndSegments, GetSegmentTypeText, getChildTypes, splitAndLineBreak, generateOrganizationsData, hierarchy}, {default: uv}] = await Promise.all([import("./_import/components/data_transformations.5ead4bf5.js"), import("./_node/unipept-visualizations@2.1.2/index.37540c86.js")]);
@@ -256,13 +256,11 @@ function buildTree(data, hierarchy) {
 return {buildTree};
 }});
 
-define({id: "0b8b5f5e", inputs: ["buildTree","hierarchy","uv","segmentTypes","segmentsForFilteredVideos"], outputs: ["updateTreeView","segmentCounts"], body: (buildTree,hierarchy,uv,segmentTypes,segmentsForFilteredVideos) => {
+define({id: "f968581c", inputs: ["buildTree","hierarchy","uv","segmentTypes","segmentsForFilteredVideos"], outputs: ["updateTreeView","segmentCounts"], body: (buildTree,hierarchy,uv,segmentTypes,segmentsForFilteredVideos) => {
 function updateTreeView(data) {
     const filteredVideEffects = buildTree(data, hierarchy);
     const videoEffectsTree = document.getElementById("videoEffectsTree");
     new uv.Treeview(videoEffectsTree, filteredVideEffects, {
-        width: videoEffectsTree.clientWidth,
-        height: videoEffectsTree.clientHeight,
         animationDuration: 0
     });
 }
@@ -457,6 +455,28 @@ if (brushChartContainer.firstChild) {
 return {barPlot,brush,brushChartContainer};
 }});
 
+define({id: "2f8d8d4b", outputs: ["switchView"], body: () => {
+document.getElementById("videoEffectsTreeButton").addEventListener("click", () => {
+    switchView("videoEffectsTreeContainer", "videoEffectsTreeButton");
+});
+document.getElementById("bubbleChartButton").addEventListener("click", () => {
+    switchView("bubblechart-container", "bubbleChartButton");
+});
+document.getElementById("filteredVideosTableButton").addEventListener("click", () => {
+    switchView("filteredVideosTableContainer", "filteredVideosTableButton");
+});
+
+function switchView(viewId, buttonId) {
+    document.querySelectorAll(".view").forEach(view => {
+        view.style.display = view.id === viewId ? "block" : "none";
+    });
+    document.querySelectorAll("#viewSwitcherContainer button").forEach(button => {
+        button.classList.toggle("active", button.id === buttonId);
+    });
+}
+return {switchView};
+}});
+
 </script>
 </head>
 <body>
@@ -491,10 +511,11 @@ return {barPlot,brush,brushChartContainer};
 <div class="observablehq observablehq--block"><!--:d65f1934:--></div>
 <div class="observablehq observablehq--block"><!--:72e7e46c:--></div>
 <div class="observablehq observablehq--block"><!--:d6fc99be:--></div>
-<div class="observablehq observablehq--block"><!--:0b8b5f5e:--></div>
+<div class="observablehq observablehq--block"><!--:f968581c:--></div>
 <div class="observablehq observablehq--block"><!--:1dfcd0b6:--></div>
 <div class="observablehq observablehq--block"><!--:99a228de:--></div>
 <div class="observablehq observablehq--block"><!--:c78aaf55:--></div>
+<div class="observablehq observablehq--block"><!--:2f8d8d4b:--></div>
 
   <!-- TOP ROW: Left = Bar Chart, Right = Filters -->
   <div class="row" id="top-row">
@@ -515,33 +536,29 @@ return {barPlot,brush,brushChartContainer};
     </div>
   </div>
   <!-- SECOND (MIDDLE) ROW: Tree Plot (Left) + Bubble Chart (Right) -->
-  <div class="row" id="middle-row">
-    <div class="column" id="videoEffectsTreeColumn">
-      <h2>Used Video Effects</h2>
-      <div id="videoEffectsTreeContainer">
-        <div id="videoEffectsTree"></div>
+<div class="row" id="middle-row">
+    <div class="column" id="viewSwitcherColumn">
+      <h2>Animation Insights</h2>
+      <div id="viewSwitcherContainer">
+        <button id="videoEffectsTreeButton">Used Video Effects</button>
+        <button id="bubbleChartButton">Creating Organizations</button>
+        <button id="filteredVideosTableButton">Found Videos</button>
+      </div>
+      <div id="viewContainer">
+        <div id="videoEffectsTreeContainer" class="view">
+          <div id="videoEffectsTree"></div>
+        </div>
+        <div id="bubblechart-container" class="view" style="display: none;">
+          <svg id="bubblechart"></svg>
+        </div>
+        <div id="filteredVideosTableContainer" class="view" style="display: none;">
+          <div id="filteredVideosTable"></div>
+        </div>
       </div>
     </div>
-<div class="column" id="bubbleChartColumn">
-      <h2>Creating Organizations</h2>
-      <div id="bubblechart-container">
-        <svg id="bubblechart"></svg>
-      </div>
-    </div>
-  </div>
-  <!-- BOTTOM ROW: Found Videos (Centered) -->
-  <div class="row" id="bottom-row">
-    <div class="column" id="filteredVideosTableColumn">
-      <h2>Found Videos</h2>
-      <div id="filteredVideosTableContainer">
-        <div id="filteredVideosTable"></div>
-      </div>
-    </div>
-  </div>
+</div>
 
 <style>
-/* Same styling, with flex rows & columns to get the left/right layout */
-
 body {
   font-family: Arial, sans-serif;
   background: #121212;
@@ -550,69 +567,58 @@ body {
   padding: 20px;
 }
 
-/* Add a subtle border, padding, and rounding around each .row */
 .row {
-  display: flex;                  /* Horizontal layout for top/middle/bottom rows */
+  display: flex;
   flex-direction: row;
   width: 100%;
-  margin-bottom: 20px;            /* Spacing between rows */
-
-  border: 1px solid #444;         /* Subtle border for each row */
-  border-radius: 6px;             /* Slight rounding of corners */
-  padding: 15px;                  /* Space inside each row */
-  background: #1a1a1a;            /* Slightly lighter background for row sections */
+  margin-bottom: 20px;
+  border: 1px solid #444;
+  border-radius: 6px;
+  padding: 15px;
+  background: #1a1a1a;
 }
 
 .column {
-  flex: 1;                        /* Each column takes up equal space */
-  margin: 0 10px;                 /* Small horizontal gap */
-
-  border: 1px solid #333;         /* Subtle border around each column */
+  flex: 1;
+  margin: 0 10px;
+  border: 1px solid #333;
   border-radius: 4px;
-  padding: 10px;                  /* Space inside each column */
+  padding: 10px;
 }
 
-/* Center the final row's content horizontally */
-#bottom-row {
-  justify-content: center;
+#viewSwitcherContainer button.active {
+  background-color: #56B4E9;
+  color: #fff;
 }
 
-/* Adjust column proportions */
 #barChartColumn {
-  flex: 3; /* Larger space for the plots column */
-  margin-right: 10px; /* Space between bar chart and filters */
+  flex: 3;
+  margin-right: 10px;
 }
 
 #filtersColumn {
-  flex: 1; /* Smaller space for the filters column */
-  margin-left: 10px; /* Space on the left side of filters */
+  flex: 1;
+  margin-left: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* Align filters at the top */
+  justify-content: flex-start;
   align-items: center;
   padding: 10px;
-  border: 1px solid #333; /* Subtle border for the filters column */
+  border: 1px solid #333;
   border-radius: 4px;
-  background: #1a1a1a; /* Match the row background */
+  background: #1a1a1a;
 }
 
-/* Adjust filter dropdowns */
 #filtersContainer {
-  width: 100%; /* Fit within the filters column */
+  width: 100%;
 }
 
 #genresDropdown,
 #countriesDropdown {
-  width: 90%; /* Adjust dropdown width to fit smaller column */
-  margin-bottom: 15px; /* Space between dropdowns */
+  width: 90%;
+  margin-bottom: 15px;
 }
 
-/* Center the final row's content horizontally */
-#bottom-row {
-  justify-content: center;
-}
-
-/* Chart container styles */
 .chart-container {
   display: flex;
   flex-direction: column;
@@ -620,61 +626,49 @@ body {
 }
 
 #videoEffectsTreeContainer {
-  display: flex; /* Flexbox for centering */
-  justify-content: center; /* Horizontal centering */
-  align-items: center; /* Vertical centering */
-  width: 100%; /* Full width of the column */
-  height: 95%; /* Full height of the column */
-  border: 1px dashed #444; /* Dashed border for visibility */
-  border-radius: 4px; /* Rounded corners */
-  background: #fff; /* White background for contrast */
-  position: relative; /* Position relative for contained elements */
-  padding: 0; /* Remove excess padding */
-  overflow: hidden; /* Prevent content from overflowing the container */
-  box-sizing: border-box; /* Include padding in width and height calculations */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 500px;
+  border: 1px dashed #444;
+  border-radius: 4px;
+  background: #fff;
+  position: relative;
+  padding: 0;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 #videoEffectsTree {
-  display: block; /* Ensure the tree plot is treated as a block element */
-  margin: 0 auto; /* Center horizontally within the container */
-  max-width: 95%; /* Restrict the maximum width to fit within the container */
-  max-height: 95%; /* Restrict the maximum height to fit within the container */
-  width: 90%; /* Set a relative width */
-  height: auto; /* Maintain aspect ratio */
-  overflow: hidden; /* Ensure the content does not overflow */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  height: 100%;
+  overflow: hidden;
 }
 
-/* If unipept's uv-treeview-node needs white text, keep this: */
 .uv-treeview-node {
   color: #fff;
 }
 
-/* Found Videos table container */
 #filteredVideosTableContainer {
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 20px;
-  /* optional: add a border if you want this area to stand out too
-     border: 1px dashed #444; 
-     border-radius: 4px; 
-  */
 }
 
 #filteredVideosTable {
   width: 100%;
-  /* optional: border around the table itself */
-  /* border: 1px solid #666; 
-     border-radius: 4px; 
-     padding: 10px; 
-  */
 }
 </style>
 </main>
 <footer id="observablehq-footer">
 <nav><a rel="next" href="./Segments"><span>Segments Test</span></a></nav>
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2025-01-05T19:06:37">Jan 5, 2025</a>.</div>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2025-01-05T20:10:37">Jan 5, 2025</a>.</div>
 </footer>
 </div>
 </body>
