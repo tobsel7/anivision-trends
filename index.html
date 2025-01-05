@@ -62,8 +62,8 @@
 import {define} from "./_observablehq/client.7f5f7582.js";
 import {registerFile} from "./_observablehq/stdlib.95bfbf7e.js";
 
-registerFile("./data/segments.csv", {"name":"./data/segments.csv","mimeType":"text/csv","path":"./_file/data/segments.9ae01672.csv","lastModified":1736014521495,"size":1036654});
-registerFile("./data/videos.csv", {"name":"./data/videos.csv","mimeType":"text/csv","path":"./_file/data/videos.eaff3335.csv","lastModified":1736014521495,"size":132080});
+registerFile("./data/segments.csv", {"name":"./data/segments.csv","mimeType":"text/csv","path":"./_file/data/segments.9ae01672.csv","lastModified":1736092983151,"size":1036654});
+registerFile("./data/videos.csv", {"name":"./data/videos.csv","mimeType":"text/csv","path":"./_file/data/videos.eaff3335.csv","lastModified":1736092983151,"size":132080});
 
 define({id: "6a5dce3b", outputs: ["createLeafFirstArray","cleanUpData","VideosAndSegments","GetSegmentTypeText","getChildTypes","splitAndLineBreak","generateOrganizationsData","hierarchy","uv"], body: async () => {
 const [{createLeafFirstArray, cleanUpData, VideosAndSegments, GetSegmentTypeText, getChildTypes, splitAndLineBreak, generateOrganizationsData, hierarchy}, {default: uv}] = await Promise.all([import("./_import/components/data_transformations.5ead4bf5.js"), import("./_node/unipept-visualizations@2.1.2/index.37540c86.js")]);
@@ -130,24 +130,32 @@ const segmentTypes = new Set([
 return {segmentTypes};
 }});
 
-define({id: "a247846a", inputs: ["view","Inputs","genres","productionCountries"], outputs: ["selectedGenres","selectedProductionCountries"], body: (view,Inputs,genres,productionCountries) => {
-const selectedGenres = view(Inputs.select(
+define({id: "14aab575", inputs: ["Inputs","genres","view","productionCountries"], outputs: ["genresDropdown","selectedGenres","productionCountryDropdown","selectedProductionCountries"], body: (Inputs,genres,view,productionCountries) => {
+// Create the dropdown element
+const genresDropdown = Inputs.select(
     genres,
     {
         multiple: true,
         label: "Selected Genres",
         value: genres
     }
-))
-const selectedProductionCountries = view(Inputs.select(
+);
+const selectedGenres = view(genresDropdown);
+// Move the dropdown into a specific container
+document.getElementById("filtersContainer").appendChild(genresDropdown);
+
+
+const productionCountryDropdown=Inputs.select(
     productionCountries,
     {
         multiple: true,
         label: "Selected Production Countries",
         value: productionCountries.values()
     }
-))
-return {selectedGenres,selectedProductionCountries};
+);
+const selectedProductionCountries = view(productionCountryDropdown);
+document.getElementById("filtersContainer").appendChild(productionCountryDropdown);
+return {genresDropdown,selectedGenres,productionCountryDropdown,selectedProductionCountries};
 }});
 
 define({id: "49396511", inputs: ["videos","selectedGenres","selectedProductionCountries"], outputs: ["filteredVideos"], body: (videos,selectedGenres,selectedProductionCountries) => {
@@ -248,13 +256,14 @@ function buildTree(data, hierarchy) {
 return {buildTree};
 }});
 
-define({id: "cb2b63c0", inputs: ["buildTree","hierarchy","uv","segmentTypes","segmentsForFilteredVideos"], outputs: ["updateTreeView","segmentCounts"], body: (buildTree,hierarchy,uv,segmentTypes,segmentsForFilteredVideos) => {
+define({id: "0b8b5f5e", inputs: ["buildTree","hierarchy","uv","segmentTypes","segmentsForFilteredVideos"], outputs: ["updateTreeView","segmentCounts"], body: (buildTree,hierarchy,uv,segmentTypes,segmentsForFilteredVideos) => {
 function updateTreeView(data) {
     const filteredVideEffects = buildTree(data, hierarchy);
     const videoEffectsTree = document.getElementById("videoEffectsTree");
     new uv.Treeview(videoEffectsTree, filteredVideEffects, {
         width: videoEffectsTree.clientWidth,
-        height: videoEffectsTree.clientHeight
+        height: videoEffectsTree.clientHeight,
+        animationDuration: 0
     });
 }
 const segmentCounts = new Map(segmentTypes.values().map(type => [type, segmentsForFilteredVideos.get(type)?.length || 0]));
@@ -262,7 +271,7 @@ updateTreeView(segmentCounts)
 return {updateTreeView,segmentCounts};
 }});
 
-define({id: "80cb4f3a", inputs: ["generateOrganizationsData","d3","splitAndLineBreak","filteredVideos"], outputs: ["updateBubbleChart"], body: (generateOrganizationsData,d3,splitAndLineBreak,filteredVideos) => {
+define({id: "11cf969c", inputs: ["generateOrganizationsData","d3","splitAndLineBreak","filteredVideos"], outputs: ["updateBubbleChart"], body: (generateOrganizationsData,d3,splitAndLineBreak,filteredVideos) => {
 function updateBubbleChart(filteredVideos)
 {
     function drawChart(filteredVideos)
@@ -275,6 +284,7 @@ function updateBubbleChart(filteredVideos)
           const marginStroke = 1; // to avoid clipping the root circle stroke
           const name = d => d.organization; // "Strings" of "flare.util.Strings"
           const group = d => d.production_country; // "util" of "flare.util.Strings"
+           const count = d => d.count;
           //const names = d => name(d).split(/(?=[A-Z][a-z])|\s+/g); // ["Legend", "Item"] of "flare.vis.legend.LegendItems"
 
 
@@ -330,21 +340,22 @@ function updateBubbleChart(filteredVideos)
                 const organizationLines = splitAndLineBreak(d.data.organization); // Apply line-breaking logic
                 return [...organizationLines]; // Combine organization lines with the count
             })
-            .join("tspan")
-                .text((text, i) => text) // Add each line
-                .attr("x", 0) // Center text horizontally
-                .attr("y", (text, i) => i * 15 - 10) // Adjust vertical positioning for each line
-                .attr("text-anchor", "middle") // Center text
-                .attr("fill", "black") // Text color
-                .style("font-size", d => `${Math.min(d.r, 5)}px`); // Dynamic font size
-                /**.style("font-size", function (text, i, nodes) {
-          
-                    const fontSize = Math.min((d3.select(nodes[i].parentNode).datum().r/2), 1);
-            
-                    console.log(`Calculated Font Size: ${fontSize}px`);
-            
-                    return `${Math.max(fontSize, 7)}px`; // Constrain font size to a minimum of 10px
-                });*/
+             .join("tspan")
+              .text((text, i) => text) // Add each line
+              .attr("x", 0) // Center text horizontally
+              .attr("text-anchor", "middle") // Center text
+              .attr("fill", "black") // Text color
+              .style("font-size", function (text, i, nodes) {
+                  // Calculate font size based on radius
+                  const parentData = d3.select(nodes[i].parentNode).datum(); // Access parent data
+                  const fontSize = Math.min(parentData.r / 6, 80); // Scale dynamically with max size 80px
+                  return `${Math.max(fontSize, 6)}px`; // Minimum font size is 6px
+              })
+              .attr("y", function (text, i, nodes) {
+                  // Dynamically adjust line spacing based on font size
+                  const fontSize = parseFloat(d3.select(this).style("font-size")); // Get current font size in pixels
+                  return i * (fontSize + 2) - ((nodes.length - 1) * (fontSize / 2)); // Center text vertically
+              });
 
           // Add a label.
           const text = node.append("text")
@@ -472,17 +483,24 @@ return {barPlot,brush,brushChartContainer};
 <div class="observablehq observablehq--block"><!--:f0c91ad7:--></div>
 <div class="observablehq observablehq--block"><!--:19daedbf:--></div>
 <h1 id="animation-trends" tabindex="-1"><a class="observablehq-header-anchor" href="#animation-trends">Animation Trends 🎥</a></h1>
-<div class="observablehq observablehq--block"><!--:a247846a:--></div>
+<div class="observablehq observablehq--block"><!--:14aab575:--></div>
 <div class="observablehq observablehq--block"><!--:49396511:--></div>
 <div class="observablehq observablehq--block"><!--:7468e75d:--></div>
 <div class="observablehq observablehq--block"><!--:d65f1934:--></div>
 <div class="observablehq observablehq--block"><!--:72e7e46c:--></div>
 <div class="observablehq observablehq--block"><!--:d6fc99be:--></div>
-<div class="observablehq observablehq--block"><!--:cb2b63c0:--></div>
-<div class="observablehq observablehq--block"><!--:80cb4f3a:--></div>
+<div class="observablehq observablehq--block"><!--:0b8b5f5e:--></div>
+<div class="observablehq observablehq--block"><!--:11cf969c:--></div>
 <div class="observablehq observablehq--block"><!--:99a228de:--></div>
 <div class="observablehq observablehq--block"><!--:c78aaf55:--></div>
 
+  <!-- Filters Container -->
+  <div id="filtersContainer">
+    <h3>Filters</h3>
+    <div id="genresDropdown"></div>
+    <div id="countriesDropdown"></div>
+  </div>
+  <!-- Chart Container -->
   <div class="chart-container">
     <h1>Videos over the Years</h1>
     <div id="line-chart-container"></div>
@@ -555,7 +573,7 @@ h1, h2 {
 </main>
 <footer id="observablehq-footer">
 <nav><a rel="next" href="./Segments"><span>Segments Test</span></a></nav>
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2025-01-04T18:15:31">Jan 4, 2025</a>.</div>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2025-01-05T16:03:13">Jan 5, 2025</a>.</div>
 </footer>
 </div>
 </body>
