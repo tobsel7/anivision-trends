@@ -385,38 +385,57 @@ if (brushChartContainer.firstChild) {
 ```
 
 <body>
-  <!-- Filters Container -->
-  <div id="filtersContainer">
-    <h3>Filters</h3>
-    <div id="genresDropdown"></div>
-    <div id="countriesDropdown"></div>
+  <!-- TOP ROW: Left = Bar Chart, Right = Filters -->
+  <div class="row" id="top-row">
+    <div class="column chart-container" id="barChartColumn">
+      <!-- "Videos over the Years" -->
+      <h1>Videos over the Years</h1>
+      <div id="line-chart-container"></div>
+      <svg id="brush-chart" width="800" height="100"></svg>
+      <div id="additional-plot-container"></div>
+    </div>
+
+<div class="column" id="filtersColumn">
+      <!-- Filters -->
+      <div id="filtersContainer">
+        <h3>Filters</h3>
+        <div id="genresDropdown"></div>
+        <div id="countriesDropdown"></div>
+      </div>
+    </div>
   </div>
 
-  <!-- Chart Container -->
-  <div class="chart-container">
-    <h1>Videos over the Years</h1>
-    <div id="line-chart-container"></div>
-    <svg id="brush-chart" width="800" height="100"></svg>
-    <div id="additional-plot-container"></div>
+  <!-- SECOND (MIDDLE) ROW: Tree Plot (Left) + Bubble Chart (Right) -->
+  <div class="row" id="middle-row">
+    <div class="column" id="videoEffectsTreeColumn">
+      <h2>Used Video Effects</h2>
+      <div id="videoEffectsTreeContainer">
+        <div id="videoEffectsTree"></div>
+      </div>
+    </div>
+
+<div class="column" id="bubbleChartColumn">
+      <h2>Creating Organizations</h2>
+      <div id="bubblechart-container">
+        <svg id="bubblechart"></svg>
+      </div>
+    </div>
   </div>
 
-  <h2>Used Video Effects</h2>
-  <div id="videoEffectsTreeContainer">
-    <div id="videoEffectsTree"></div>
-  </div>
-
-  <h2>Creating Organizations</h2>
-  <div id="bubblechart-container">
-    <svg id="bubblechart"></svg>
-  </div>
-
-  <h2>Found Videos</h2>
-  <div id="filteredVideosTableContainer">
-    <div id="filteredVideosTable"></div>
+  <!-- BOTTOM ROW: Found Videos (Centered) -->
+  <div class="row" id="bottom-row">
+    <div class="column" id="filteredVideosTableColumn">
+      <h2>Found Videos</h2>
+      <div id="filteredVideosTableContainer">
+        <div id="filteredVideosTable"></div>
+      </div>
+    </div>
   </div>
 </body>
 
 <style>
+/* Same styling, with flex rows & columns to get the left/right layout */
+
 body {
   font-family: Arial, sans-serif;
   background: #121212;
@@ -425,44 +444,86 @@ body {
   padding: 20px;
 }
 
-h1, h2 {
-  padding: 10px; /* Adjust the padding value as needed */
+/* Add a subtle border, padding, and rounding around each .row */
+.row {
+  display: flex;                  /* Horizontal layout for top/middle/bottom rows */
+  flex-direction: row;
+  width: 100%;
+  margin-bottom: 20px;            /* Spacing between rows */
+
+  border: 1px solid #444;         /* Subtle border for each row */
+  border-radius: 6px;             /* Slight rounding of corners */
+  padding: 15px;                  /* Space inside each row */
+  background: #1a1a1a;            /* Slightly lighter background for row sections */
 }
+
+.column {
+  flex: 1;                        /* Each column takes up equal space */
+  margin: 0 10px;                 /* Small horizontal gap */
+
+  border: 1px solid #333;         /* Subtle border around each column */
+  border-radius: 4px;
+  padding: 10px;                  /* Space inside each column */
+}
+
+/* Center the final row's content horizontally */
+#bottom-row {
+  justify-content: center;
+}
+
+/* Keep your existing "chart-container" styles for bar charts */
 .chart-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  /* The .column class above also applies a border to this container. 
+     If you want the chart area to share that border, leave as is. */
 }
 
+/* Tree container */
 #videoEffectsTreeContainer {
   width: 100%;
   height: 500px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 20px; /* Add margin to separate from the brush chart */
+  margin-top: 20px; /* Space above the tree container */
+  border: 1px dashed #444; /* optional extra border just around the tree area */
+  border-radius: 4px;
+  background: #fff; /* White background for the tree area */
 }
 
 #videoEffectsTree {
   width: 100%;
   height: 100%;
-  color: #000; /* Set text color to black */
-  background: #fff; /* Set background color to white */
+  color: #000;     /* Dark text for the Tree */
+  background: #fff;
 }
 
+/* If unipept's uv-treeview-node needs white text, keep this: */
 .uv-treeview-node {
-  color: #fff; /* Ensure text color is white for tree nodes */
+  color: #fff;
 }
 
+/* Found Videos table container */
 #filteredVideosTableContainer {
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 20px; /* Add margin to separate from the video effects tree */
+  margin-top: 20px;
+  /* optional: add a border if you want this area to stand out too
+     border: 1px dashed #444; 
+     border-radius: 4px; 
+  */
 }
 
 #filteredVideosTable {
   width: 100%;
+  /* optional: border around the table itself */
+  /* border: 1px solid #666; 
+     border-radius: 4px; 
+     padding: 10px; 
+  */
 }
 </style>
