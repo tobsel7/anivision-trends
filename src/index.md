@@ -214,6 +214,7 @@ function updateBubbleChart(filteredVideos)
           const marginStroke = 1; // to avoid clipping the root circle stroke
           const name = d => d.organization; // "Strings" of "flare.util.Strings"
           const group = d => d.production_country; // "util" of "flare.util.Strings"
+           const count = d => d.count;
           //const names = d => name(d).split(/(?=[A-Z][a-z])|\s+/g); // ["Legend", "Item"] of "flare.vis.legend.LegendItems"
 
 
@@ -269,21 +270,22 @@ function updateBubbleChart(filteredVideos)
                 const organizationLines = splitAndLineBreak(d.data.organization); // Apply line-breaking logic
                 return [...organizationLines]; // Combine organization lines with the count
             })
-            .join("tspan")
-                .text((text, i) => text) // Add each line
-                .attr("x", 0) // Center text horizontally
-                .attr("y", (text, i) => i * 15 - 10) // Adjust vertical positioning for each line
-                .attr("text-anchor", "middle") // Center text
-                .attr("fill", "black") // Text color
-                .style("font-size", d => `${Math.min(d.r, 5)}px`); // Dynamic font size
-                /**.style("font-size", function (text, i, nodes) {
-          
-                    const fontSize = Math.min((d3.select(nodes[i].parentNode).datum().r/2), 1);
-            
-                    console.log(`Calculated Font Size: ${fontSize}px`);
-            
-                    return `${Math.max(fontSize, 7)}px`; // Constrain font size to a minimum of 10px
-                });*/
+             .join("tspan")
+              .text((text, i) => text) // Add each line
+              .attr("x", 0) // Center text horizontally
+              .attr("text-anchor", "middle") // Center text
+              .attr("fill", "black") // Text color
+              .style("font-size", function (text, i, nodes) {
+                  // Calculate font size based on radius
+                  const parentData = d3.select(nodes[i].parentNode).datum(); // Access parent data
+                  const fontSize = Math.min(parentData.r / 6, 80); // Scale dynamically with max size 80px
+                  return `${Math.max(fontSize, 6)}px`; // Minimum font size is 6px
+              })
+              .attr("y", function (text, i, nodes) {
+                  // Dynamically adjust line spacing based on font size
+                  const fontSize = parseFloat(d3.select(this).style("font-size")); // Get current font size in pixels
+                  return i * (fontSize + 2) - ((nodes.length - 1) * (fontSize / 2)); // Center text vertically
+              });
 
           // Add a label.
           const text = node.append("text")
