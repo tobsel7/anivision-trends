@@ -194,7 +194,8 @@ function updateTreeView(data) {
     const videoEffectsTree = document.getElementById("videoEffectsTree");
     new uv.Treeview(videoEffectsTree, filteredVideEffects, {
         width: videoEffectsTree.clientWidth,
-        height: videoEffectsTree.clientHeight
+        height: videoEffectsTree.clientHeight,
+        animationDuration: 0
     });
 }
 const segmentCounts = new Map(segmentTypes.values().map(type => [type, segmentsForFilteredVideos.get(type)?.length || 0]));
