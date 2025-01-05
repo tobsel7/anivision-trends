@@ -9,6 +9,11 @@ AniVision Trends is built using the [Observable Framework](https://observablehq.
 - [Christian Schönauer](https://github.com/Christian-Virtuoreal)
 - [Tuvshin Selenge](https://github.com/TuvshinSelenge)
  
+## Data Source
+
+The visualizations are based on data investigated in the 
+[AniVision project](https://research.fhstp.ac.at/projekte/anivision).
+
 ## Deployed Version
 
 The rendered version of this project is available under
