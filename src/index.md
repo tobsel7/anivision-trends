@@ -384,6 +384,7 @@ if (brushChartContainer.firstChild) {
 }
 ```
 
+
 <body>
   <!-- TOP ROW: Left = Bar Chart, Right = Filters -->
   <div class="row" id="top-row">
@@ -471,33 +472,70 @@ body {
   justify-content: center;
 }
 
-/* Keep your existing "chart-container" styles for bar charts */
+/* Adjust column proportions */
+#barChartColumn {
+  flex: 3; /* Larger space for the plots column */
+  margin-right: 10px; /* Space between bar chart and filters */
+}
+
+#filtersColumn {
+  flex: 1; /* Smaller space for the filters column */
+  margin-left: 10px; /* Space on the left side of filters */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align filters at the top */
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #333; /* Subtle border for the filters column */
+  border-radius: 4px;
+  background: #1a1a1a; /* Match the row background */
+}
+
+/* Adjust filter dropdowns */
+#filtersContainer {
+  width: 100%; /* Fit within the filters column */
+}
+
+#genresDropdown,
+#countriesDropdown {
+  width: 90%; /* Adjust dropdown width to fit smaller column */
+  margin-bottom: 15px; /* Space between dropdowns */
+}
+
+/* Center the final row's content horizontally */
+#bottom-row {
+  justify-content: center;
+}
+
+/* Chart container styles */
 .chart-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* The .column class above also applies a border to this container. 
-     If you want the chart area to share that border, leave as is. */
 }
 
-/* Tree container */
 #videoEffectsTreeContainer {
-  width: 100%;
-  height: 500px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px; /* Space above the tree container */
-  border: 1px dashed #444; /* optional extra border just around the tree area */
-  border-radius: 4px;
-  background: #fff; /* White background for the tree area */
+  display: flex; /* Flexbox for centering */
+  justify-content: center; /* Horizontal centering */
+  align-items: center; /* Vertical centering */
+  width: 100%; /* Full width of the column */
+  height: 95%; /* Full height of the column */
+  border: 1px dashed #444; /* Dashed border for visibility */
+  border-radius: 4px; /* Rounded corners */
+  background: #fff; /* White background for contrast */
+  position: relative; /* Position relative for contained elements */
+  padding: 0; /* Remove excess padding */
+  overflow: hidden; /* Ensure content does not overflow the container */
+  box-sizing: border-box; /* Include padding in width and height calculations */
 }
 
 #videoEffectsTree {
-  width: 100%;
-  height: 100%;
-  color: #000;     /* Dark text for the Tree */
-  background: #fff;
+  display: block; /* Ensure the tree plot is treated as a block element */
+  margin: 0; /* Reset margins to prevent overflow */
+  max-width: 150%; /* Increase maximum width to make it bigger */
+  max-height: 150%; /* Increase maximum height to make it bigger */
+  width: 90%; /* Slightly increase the width */
+  height: auto; /* Maintain aspect ratio */
 }
 
 /* If unipept's uv-treeview-node needs white text, keep this: */
