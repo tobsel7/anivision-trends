@@ -478,15 +478,6 @@ body {
   margin-right: 10px; /* Space between bar chart and filters */
 }
 
-#line-chart-container {
-  margin-bottom: 20px; /* Add space below the line chart */
-}
-
-#brush-chart {
-  margin-top: 10px; /* Add space above the bar chart (brush chart) */
-}
-
-
 #filtersColumn {
   flex: 1; /* Smaller space for the filters column */
   margin-left: 10px; /* Space on the left side of filters */
@@ -534,17 +525,18 @@ body {
   background: #fff; /* White background for contrast */
   position: relative; /* Position relative for contained elements */
   padding: 0; /* Remove excess padding */
-  overflow: hidden; /* Ensure content does not overflow the container */
+  overflow: hidden; /* Prevent content from overflowing the container */
   box-sizing: border-box; /* Include padding in width and height calculations */
 }
 
 #videoEffectsTree {
   display: block; /* Ensure the tree plot is treated as a block element */
-  margin: 0; /* Reset margins to prevent overflow */
-  max-width: 150%; /* Increase maximum width to make it bigger */
-  max-height: 150%; /* Increase maximum height to make it bigger */
-  width: 90%; /* Slightly increase the width */
+  margin: 0 auto; /* Center horizontally within the container */
+  max-width: 95%; /* Restrict the maximum width to fit within the container */
+  max-height: 95%; /* Restrict the maximum height to fit within the container */
+  width: 90%; /* Set a relative width */
   height: auto; /* Maintain aspect ratio */
+  overflow: hidden; /* Ensure the content does not overflow */
 }
 
 /* If unipept's uv-treeview-node needs white text, keep this: */
